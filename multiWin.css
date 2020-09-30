@@ -1,0 +1,51 @@
+body {
+    background-color:rgb(41, 41, 41);
+}
+
+.text_area {
+    background-color: #ddddddf3;
+    width: 300px;
+    border-style: none;
+    border-radius:3px;
+    padding: 7.5px 10px;
+    margin-bottom: 10px;
+}
+
+.embet {
+    margin-right: 6px;
+}
+
+#embed_button_area {
+    display: inline-block;
+}
+
+#form_area {
+    display: inline-block;
+}
+
+#add_button_area {
+    display: inline-block;
+}
+
+#embed_button {
+    background-color:#69901c;
+    color: white;
+    border-style: none;
+    border-radius:3px;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+}
+
+#add_button {
+    background-color:#d49100;
+    color: white;
+    border-style: none;
+    border-radius:3px;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+}
+
+input[type="submit"], input[type="reset"], input[type="button"], button{
+    cursor: pointer;
+  }
+
