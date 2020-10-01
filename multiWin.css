@@ -16,6 +16,18 @@ body {
     margin-bottom: 10px;
 }
 
+.select_menu {
+    background-color: #69901cad;
+    width: 130px;
+    color: white;
+    border-style: none;
+    border-radius:3px;
+    padding: 7px 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+
+}
+
 .embet {
     margin-right: 6px;
 }
@@ -52,4 +64,5 @@ body {
 input[type="submit"], input[type="reset"], input[type="button"], button{
     cursor: pointer;
   }
+
 
