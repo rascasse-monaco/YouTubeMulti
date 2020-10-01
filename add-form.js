@@ -9,19 +9,19 @@ function addForm() {
     input_data.type = 'text';
     input_data.setAttribute("class", "text_area");
     input_data.id = 'input_url-' + (urlNum + 1);
-    input_data.placeholder = '動画のURL' + (urlNum + 1);
+    input_data.placeholder = '"YouTubeのURLをペースト';
   
   //フォームエリア作成
-  var parentFormarea = document.getElementById('form_area');
+  var parentFormarea = document.getElementById('form_button_area');
   parentFormarea.appendChild(input_data)
 
   //フォームを追加ボタン削除
-  var removeAddBotton = document.getElementById('add_button_area');
+  var removeAddBotton = document.getElementById('form_button_area');
   var addButton = document.getElementById('add_button');
   removeAddBotton.removeChild(addButton);
 
   //埋め込みボタン作成
-  var embedButton = document.getElementById('embed_button_area');
+  var embedButton = document.getElementById('form_button_area');
   var addButton = document.createElement('input');
     addButton.type = 'button';
     addButton.id = 'embed_button';
@@ -50,23 +50,23 @@ function embed(){
   var output_url = document.getElementById("output_url-" + urlNum);
   output_url.innerHTML = iframe;
 
-  //add_button_areaに動画を追加ボタンを作成
-  var parentButton = document.getElementById('add_button_area');
+  //form_button_areaに動画を追加ボタンを作成
+  var parentButton = document.getElementById('form_button_area');
   var addButton = document.createElement('input');
     addButton.type = 'button';
     addButton.id = 'add_button';
-    addButton.value = '＋ 動画を追加';
+    addButton.value = '動画を追加';
     addButton.setAttribute("onClick", "addForm(urlNum)");
   parentButton.appendChild(addButton);
 
   //フォームエリア削除
-  var removeFormArea = document.getElementById('form_area');
+  var removeFormArea = document.getElementById('form_button_area');
   var form = document.getElementById('input_url-' + urlNum);
   removeFormArea.removeChild(form);
 
 
   //埋め込みボタン削除
-  var removeEmbedBotton = document.getElementById('embed_button_area');
+  var removeEmbedBotton = document.getElementById('form_button_area');
   var embedButton = document.getElementById('embed_button');
   removeEmbedBotton.removeChild(embedButton);
 }

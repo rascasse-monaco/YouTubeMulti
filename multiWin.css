@@ -1,3 +1,7 @@
+*{
+    margin: 0;
+    padding: 0;
+}
 body {
     background-color:rgb(41, 41, 41);
 }
@@ -8,6 +12,7 @@ body {
     border-style: none;
     border-radius:3px;
     padding: 7.5px 10px;
+    margin-right: 5px;
     margin-bottom: 10px;
 }
 
@@ -15,17 +20,12 @@ body {
     margin-right: 6px;
 }
 
-#embed_button_area {
-    display: inline-block;
+#form_button_area {
+    font-size: 0;
+    margin-top: 10px;
+    margin-left: 10px;
 }
 
-#form_area {
-    display: inline-block;
-}
-
-#add_button_area {
-    display: inline-block;
-}
 
 #embed_button {
     background-color:#69901c;
@@ -43,6 +43,10 @@ body {
     border-radius:3px;
     padding: 5px 10px;
     margin-bottom: 10px;
+}
+
+#embed_area {
+    margin-left: 10px;
 }
 
 input[type="submit"], input[type="reset"], input[type="button"], button{
