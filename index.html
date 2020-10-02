@@ -11,10 +11,10 @@
 <body>
 <!-- URLを入力するフォームやボタンをつくるエリア -->
     <div id="form_button_area">
-        <input type="text" class="text_area" id="input_url-1" placeholder="YouTubeのURLをペースト">
+        <input type="text" class="text_area" id="input_url-1" placeholder="YouTube動画のURLをペースト">
         <select name="reso" id="set_reso" class="select_menu">
             <option value='width="800" height="450"'>動画サイズ：大</option>
-            <option value='width="480" height="270"'>動画サイズ：中</option>
+            <option value='width="480" height="270"' selected>動画サイズ：中</option>
             <option value='width="320" height="180"'>動画サイズ：小</option>
         </select>
         <input type="button" id="embed_button" value="動画を埋め込み" onclick="resoSet(resolution);embed(urlNum)">

@@ -10,7 +10,7 @@ function addForm() {
     input_data.type = 'text';
     input_data.setAttribute("class", "text_area");
     input_data.id = 'input_url-' + (urlNum + 1);
-    input_data.placeholder = '"YouTubeのURLをペースト';
+    input_data.placeholder = '追加するYouTube動画のURLをペースト';
   
   //フォームエリア作成
   var parentFormarea = document.getElementById('form_button_area');
@@ -56,7 +56,7 @@ function embed(){
   var addButton = document.createElement('input');
     addButton.type = 'button';
     addButton.id = 'add_button';
-    addButton.value = '動画を追加';
+    addButton.value = 'さらに動画を追加';
     addButton.setAttribute("onClick", "addForm(urlNum)");
   parentButton.appendChild(addButton);
 

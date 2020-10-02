@@ -1,4 +1,5 @@
 *{
+    font-family:"Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -8,24 +9,25 @@ body {
 
 .text_area {
     background-color: #ddddddf3;
-    width: 300px;
+    width: 330px;
     border-style: none;
     border-radius:3px;
-    padding: 7.5px 10px;
-    margin-right: 5px;
+    height: 100%;
     margin-bottom: 10px;
+    margin-right: 5px;
+    padding-left: 10px;
 }
 
 .select_menu {
-    background-color: #69901cad;
-    width: 130px;
+    background-color: #929292dc;
+    width: 140px;
     color: white;
     border-style: none;
     border-radius:3px;
-    padding: 7px 5px;
-    margin-right: 5px;
+    height: 100%;
     margin-bottom: 10px;
-
+    margin-right: 5px;
+    padding: 0px 10px;
 }
 
 .embet {
@@ -34,27 +36,33 @@ body {
 
 #form_button_area {
     font-size: 0;
+    height: 35px;
     margin-top: 10px;
+    margin-bottom: 10px;
     margin-left: 10px;
 }
 
 
 #embed_button {
-    background-color:#69901c;
+    background-color:#e6a800d8;
     color: white;
     border-style: none;
     border-radius:3px;
-    padding: 5px 10px;
+    height: 100%;
     margin-bottom: 10px;
+    padding: 0px 10px;
+
 }
 
 #add_button {
-    background-color:#d49100;
+    background-color:#a10043be;
     color: white;
     border-style: none;
     border-radius:3px;
-    padding: 5px 10px;
+    height: 100%;
     margin-bottom: 10px;
+    padding: 0px 10px;
+
 }
 
 #embed_area {
@@ -62,6 +70,10 @@ body {
 }
 
 input[type="submit"], input[type="reset"], input[type="button"], button{
+    cursor: pointer;
+  }
+
+select {
     cursor: pointer;
   }
 
