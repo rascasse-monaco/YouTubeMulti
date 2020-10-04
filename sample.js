@@ -1,12 +1,16 @@
-let width = 0
-let height = 0
+let resoArray = new Array();
 
-if (width === 320) {
-    height = 180;
-} else if (width === 480){
-    height = 270;
-} else {
-    height = 450;
-}
-
-console.log (height);
+function resoSet() {
+    let resolution = 'small';
+  
+      if (resolution === 'small') {
+        resoArray = ['320', '180'];
+      } else if (width === 'middle'){
+        resoArray = ['400', '270'];
+      } else {
+        resoArray = ['800', '450'];
+      }
+      console.log (resoArray[0]);
+  }
+  
+resoSet();
