@@ -28,23 +28,28 @@ function embed(){
     addButton.setAttribute("onClick", "addForm(urlNum)");
   parentButton.appendChild(addButton);
 
-  //フォームエリア削除
-  var removeFormArea = document.getElementById('form_button_area');
-  var form = document.getElementById('input_url-' + urlNum);
-  removeFormArea.removeChild(form);
+  remove();
 
-
-  //埋め込みボタン削除
-  var removeEmbedBotton = document.getElementById('form_button_area');
-  var embedButton = document.getElementById('embed_button');
-  removeEmbedBotton.removeChild(embedButton);
-
-  //動画サイズプルダウンメニュー削除（初回埋め込み移行エラー出るので要修正）
-  var removeResoMenu = document.getElementById('form_button_area');
-  var resoMenu = document.getElementById('set_reso');
-  if (resoMenu) {
-    removeResoMenu.removeChild(resoMenu);
-  }
+}
+//埋め込み動作によって不要になる要素を削除するファンクション
+function remove() {
+    //フォームエリア削除
+    var removeFormArea = document.getElementById('form_button_area');
+    var form = document.getElementById('input_url-' + urlNum);
+    removeFormArea.removeChild(form);
+  
+  
+    //埋め込みボタン削除
+    var removeEmbedBotton = document.getElementById('form_button_area');
+    var embedButton = document.getElementById('embed_button');
+    removeEmbedBotton.removeChild(embedButton);
+  
+    //動画サイズプルダウンメニュー削除（初回埋め込み移行エラー出るので要修正）
+    var removeResoMenu = document.getElementById('form_button_area');
+    var resoMenu = document.getElementById('set_reso');
+    if (resoMenu) {
+      removeResoMenu.removeChild(resoMenu);
+    }
 }
 
 
