@@ -27,6 +27,7 @@ function addForm() {
     addButton.type = 'button';
     addButton.id = 'embed_button';
     addButton.value = '動画を埋め込み';
+    //onclickでfunction、embedとreoSetを呼び出し
     addButton.setAttribute("onClick", "embed(urlNum);resoSet()");
 
   embedButton.appendChild(addButton);

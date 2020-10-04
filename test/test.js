@@ -6,23 +6,22 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 var player;
 function onYouTubeIframeAPIReady() {
 player = new YT.Player('player', {
-height: '503',
-width: '894',
-videoId: 'iCD-7zn2-gs',
-wmode: 'transparent',
+height: '270',
+width: '480',
+videoId: 'lmYiKATgGOA',
 playerVars:{
-'loop': '1',
-'playlist': 'iCD-7zn2-gs',
 'rel': '0',
-'showinfo': '0',
-'color': 'white',
 },
+
+//API が起動するイベントと、これらのイベントが発生したときに API が呼び出す関数（イベント リスナー）を識別
 events: {
 'onReady': onPlayerReady,
 'onStateChange': onPlayerStateChange
 }
 });
 }
+
+//eventsに入っている関数類
 function onPlayerReady(event) {
 event.target.playVideo();
 event.target.mute();
