@@ -31,7 +31,7 @@ function embed(){
   remove();
 
 }
-//埋め込み動作によって不要になる要素を削除するファンクション
+//埋め込み動作によって不要になる要素を削除する
 function remove() {
     //フォームエリア削除
     var removeFormArea = document.getElementById('form_button_area');
