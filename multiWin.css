@@ -1,7 +1,6 @@
 *{
     font-family:"Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;
-    margin: 0;
-    padding: 0;
+
 }
 body {
     background-color:rgb(41, 41, 41);
@@ -49,7 +48,6 @@ body {
     border-style: none;
     border-radius:3px;
     height: 100%;
-    margin-bottom: 10px;
     padding: 0px 10px;
 
 }

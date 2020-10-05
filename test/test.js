@@ -4,8 +4,8 @@ var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 var player;
-var input_url = 'https://www.youtube.com/watch?v=63strLjid2Y';//document.getElementById("input_url-" + urlNum).value;
-var input_url = input_url.split('v=')[1];//URLから動画のIDを抽出
+let input_url = 'https://www.youtube.com/watch?v=63strLjid2Y';//document.getElementById("input_url-" + urlNum).value;
+    input_url = input_url.split('v=')[1];//URLから動画のIDを抽出
 
 function onYouTubeIframeAPIReady() {
 player = new YT.Player('player', {
