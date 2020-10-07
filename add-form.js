@@ -45,7 +45,7 @@ if (youTubeUrl.test(input_url)) {
    * ?enablejsapi=1によって"https://www.youtube.com/iframe_api"を使用可能にして、
    * apiオプションを追加できるようにする。
   */
-  let iframe = '<iframe id="player" width= ' + resoArray[0] + ' height=' + resoArray[1] + ' src="https://www.youtube.com/embed/' + input_url + '?enablejsapi=1' + '" frameborder="0"   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;  picture-in-picture" allowfullscreen></iframe>';
+  let iframe = '<iframe id="player" width= ' + resoArray[0] + ' height=' + resoArray[1] + ' src=" https://www.youtube.com/embed/' + input_url + '?enablejsapi=1' + '" frameborder="0"   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;  picture-in-picture" allowfullscreen></iframe>';
   
   //埋め込みエリアに動画（iframe）を埋め込み
   let output_url = document.getElementById("output_url-" + urlNum);
@@ -69,10 +69,10 @@ var firstScriptTag = document.getElementsByTagName('script')[0];
   }
 //onPlayerReadyとonPlayerStateChange関数、動画を制御するイベントを中に入れる
 function onPlayerReady(event) {
-  //イベントの例　event.target.playVideo();
+//イベントの例　event.target.playVideo();
 }
 function onPlayerStateChange(event) {
-  event.target.mute();//再生を開始したら音声をミュートする
+  event.target.mute();
 }
 
 
