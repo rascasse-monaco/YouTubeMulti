@@ -27,17 +27,54 @@ function embed(){
 
 }
 
+
+
+
 //iframeを作成
 function createIframe() {
-  let input_url = document.getElementById("input_url-" + urlNum).value;
-  input_url = input_url.split('v=')[1];//URLから動画のIDを抽出
 
-  let iframe = '<iframe width= ' + resoArray[0] + ' height=' + resoArray[1] + '   src="https://www.youtube.com/embed/' + input_url + '" frameborder="0"   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;  picture-in-picture" allowfullscreen></iframe>';//iframeに動画のIDとサイズ等を入れ込んで代入
+let input_url = document.getElementById("input_url-" + urlNum).value;
+let youTubeUrl = /youtube/ig;
+if (youTubeUrl.test(input_url)) {
+  input_url = input_url.split('v=')[1];//URLから動画のIDを抽出
+} else {
+  input_url = input_url.split('be/')[1];//URLから動画のIDを抽出
+}
+
+  /**iframeに動画のIDとサイズ等を入れ込んで代入
+   * ?enablejsapi=1によって"https://www.youtube.com/iframe_api"を使用可能にして、
+   * apiオプションを追加できるようにする。
+  */
+  let iframe = '<iframe id="player" width= ' + resoArray[0] + ' height=' + resoArray[1] + ' src="https://www.youtube.com/embed/' + input_url + '?enablejsapi=1' + '" frameborder="0"   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;  picture-in-picture" allowfullscreen></iframe>';
+  
   //埋め込みエリアに動画（iframe）を埋め込み
   let output_url = document.getElementById("output_url-" + urlNum);
-  output_url.innerHTML = iframe;
-
+      output_url.innerHTML = iframe;
 }
+
+//YouTubeApi読み込みとオプション設定部分
+var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+//APIを実行
+ var player;
+  function onYouTubeIframeAPIReady() {
+	  player = new YT.Player("player",{
+	    events: {
+        'onReady': onPlayerReady,//API呼び出しの受信を開始する準備ができると起動
+        'onStateChange': onPlayerStateChange// プレーヤーの状態が変わると起動
+      }
+	  });
+  }
+//onPlayerReadyとonPlayerStateChange関数、動画を制御するイベントを中に入れる
+function onPlayerReady(event) {
+  //イベントの例　event.target.playVideo();
+}
+function onPlayerStateChange(event) {
+  event.target.mute();//再生を開始したら音声をミュートする
+}
+
 
 //埋め込み動作によって不要になる要素を削除する
 function remove() {
