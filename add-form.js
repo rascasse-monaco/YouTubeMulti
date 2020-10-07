@@ -9,7 +9,7 @@ function embed(){
   const embedArea = document.getElementById("embed_area");
   const span = document.createElement('span');
   span.id = 'output_url-' + urlNum;
-  span.setAttribute("class", "embet");
+  span.setAttribute("class", "embed");
   embedArea.appendChild(span);
 
   createIframe(urlNum);
@@ -33,19 +33,21 @@ function embed(){
 //iframeを作成
 function createIframe() {
 
+//スマホ短縮URL用分岐
 let input_url = document.getElementById("input_url-" + urlNum).value;
 let youTubeUrl = /youtube/ig;
 if (youTubeUrl.test(input_url)) {
-  input_url = input_url.split('v=')[1];//URLから動画のIDを抽出
+  input_url = input_url.split('v=')[1];//通常URL用
 } else {
-  input_url = input_url.split('be/')[1];//URLから動画のIDを抽出
+  input_url = input_url.split('be/')[1];//短縮URL用
 }
 
   /**iframeに動画のIDとサイズ等を入れ込んで代入
    * ?enablejsapi=1によって"https://www.youtube.com/iframe_api"を使用可能にして、
    * apiオプションを追加できるようにする。
   */
-  let iframe = '<iframe id="player" width= ' + resoArray[0] + ' height=' + resoArray[1] + ' src=" https://www.youtube.com/embed/' + input_url + '?enablejsapi=1' + '" frameborder="0"   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;  picture-in-picture" allowfullscreen></iframe>';
+  let iframe = '<iframe id="player" width= ' + resoArray[0] + ' height=' + resoArray[1] + ' src=" https://www.youtube.com/embed/' + input_url + '?rel=0&amp;enablejsapi=1&amp;widgetid=1' + '" frameborder="0"   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+
   
   //埋め込みエリアに動画（iframe）を埋め込み
   let output_url = document.getElementById("output_url-" + urlNum);
@@ -69,10 +71,11 @@ var firstScriptTag = document.getElementsByTagName('script')[0];
   }
 //onPlayerReadyとonPlayerStateChange関数、動画を制御するイベントを中に入れる
 function onPlayerReady(event) {
-//イベントの例　event.target.playVideo();
+  event.target.playVideo();
+  event.target.mute();
 }
 function onPlayerStateChange(event) {
-  event.target.mute();
+
 }
 
 

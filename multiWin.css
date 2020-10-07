@@ -3,7 +3,7 @@
 
 }
 body {
-    background-color:rgb(41, 41, 41);
+    background-color:rgb(107, 106, 106);
 }
 
 .text_area {
@@ -29,8 +29,13 @@ body {
     padding: 0px 10px;
 }
 
-.embet {
+.embed {
     margin-right: 6px;
+}
+
+#logo {
+    margin-top: 10px;
+    margin-left: 10px;
 }
 
 #form_button_area {
@@ -53,7 +58,7 @@ body {
 }
 
 #add_button {
-    background-color:#a10043be;
+    background-color:#e6a800d8;
     color: white;
     border-style: none;
     border-radius:3px;
