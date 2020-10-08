@@ -144,7 +144,7 @@ function addForm() {
   const addButton = document.createElement('input');
     addButton.type = 'button';
     addButton.id = 'embed_button';
-    addButton.value = '動画を埋め込み';
+    addButton.value = '動画を追加';
     //onclickでfunction、embedとreoSetを呼び出し
     addButton.setAttribute("onClick", "embed(urlNum)");
 

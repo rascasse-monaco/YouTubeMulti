@@ -3,7 +3,7 @@
 
 }
 body {
-    background-color:rgb(107, 106, 106);
+    background-color:rgb(53, 53, 53);
 }
 
 .text_area {
@@ -38,6 +38,10 @@ body {
     margin-left: 10px;
 }
 
+#title {
+    color: white;
+    margin-left: 10px;
+}
 #form_button_area {
     font-size: 0;
     height: auto;
@@ -58,7 +62,7 @@ body {
 }
 
 #add_button {
-    background-color:#e6a800d8;
+    background-color:#008d3baf;
     color: white;
     border-style: none;
     border-radius:3px;
