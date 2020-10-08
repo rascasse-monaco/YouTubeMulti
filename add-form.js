@@ -3,31 +3,36 @@
 let urlNum = 1 ;//動画URLのナンバー
 let resoArray = new Array();
 
+//動画埋込ボタン押下後処理用関数
 function embed(){
+  //URL未入力の場合はボタン押下無視
+  let input_url = document.getElementById("input_url-" + urlNum).value;
+  if (input_url) {
+    //動画埋め込みエリアの作成
+    const embedArea = document.getElementById("embed_area");
+    const span = document.createElement('span');
+    span.id = 'output_url-' + urlNum;
+    span.setAttribute("class", "embed");
+    embedArea.appendChild(span);
 
-  //動画埋め込みエリアの作成
-  const embedArea = document.getElementById("embed_area");
-  const span = document.createElement('span');
-  span.id = 'output_url-' + urlNum;
-  span.setAttribute("class", "embed");
-  embedArea.appendChild(span);
+    createIframe(urlNum);
 
-  createIframe(urlNum);
+    //form_button_areaに動画を追加ボタンを作成
+    const parentButton = document.getElementById('form_button_area');
+    const addButton = document.createElement('input');
+      addButton.type = 'button';
+      addButton.id = 'add_button';
+      addButton.value = 'さらに動画を追加';
+      addButton.setAttribute("onClick", "addForm(urlNum)");
+    parentButton.appendChild(addButton);
 
-  //form_button_areaに動画を追加ボタンを作成
-  const parentButton = document.getElementById('form_button_area');
-  const addButton = document.createElement('input');
-    addButton.type = 'button';
-    addButton.id = 'add_button';
-    addButton.value = 'さらに動画を追加';
-    addButton.setAttribute("onClick", "addForm(urlNum)");
-  parentButton.appendChild(addButton);
+    remove();
 
-  remove();
+  } else {}
+
+  input_url = null;
 
 }
-
-
 
 
 //iframeを作成
