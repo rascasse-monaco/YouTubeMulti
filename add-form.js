@@ -2,6 +2,8 @@
 
 let urlNum = 1 ;//動画URLのナンバー
 let resoArray = new Array();
+let globalInputUrl = null;
+let iframe = null;
 
 //動画埋込ボタン押下後処理用関数
 function embed(){
@@ -40,24 +42,35 @@ function createIframe() {
 
 //スマホ短縮URL用分岐
 let input_url = document.getElementById("input_url-" + urlNum).value;
-let youTubeUrl = /youtube/ig;
-if (youTubeUrl.test(input_url)) {
-  input_url = input_url.split('v=')[1];//通常URL用
+let youTube_url = /youtube/ig;
+let niconico_url = /nicovideo/ig;
+if (youTube_url.test(input_url)) {
+  globalInputUrl = input_url.split('v=')[1];//通常URL用
+  youTubeIframe();//YouTube用Iframe作成関数
 } else {
-  input_url = input_url.split('be/')[1];//短縮URL用
+  globalInputUrl = input_url.split('be/')[1];//短縮URL用
+  youTubeIframe();//YouTube用Iframe作成関数
 }
 
-  /**iframeに動画のIDとサイズ等を入れ込んで代入
-   * ?enablejsapi=1によって"https://www.youtube.com/iframe_api"を使用可能にして、
-   * apiオプションを追加できるようにする。
-  */
-  let iframe = '<iframe id="player" width= ' + resoArray[0] + ' height=' + resoArray[1] + ' src=" https://www.youtube.com/embed/' + input_url + '?rel=0&amp;enablejsapi=1&amp;widgetid=1' + '" frameborder="0"   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-
-  
   //埋め込みエリアに動画（iframe）を埋め込み
   let output_url = document.getElementById("output_url-" + urlNum);
       output_url.innerHTML = iframe;
 }
+
+//YouTube用Iframe作成関数
+function youTubeIframe() {
+  /**iframeに動画のIDとサイズ等を入れ込んで代入
+   * ?enablejsapi=1によって"https://www.youtube.com/iframe_api"を使用可能にして、
+   * apiオプションを追加できるようにする。(できてない)
+  */
+  iframe = '<iframe id="player" width= ' + resoArray[0] + ' height=' +  resoArray[1] + ' src=" https://www.youtube.com/embed/' + globalInputUrl + '?rel=0&  amp;enablejsapi=1&amp;widgetid=1' + '" frameborder="0"    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;   picture-in-picture" allowfullscreen></iframe>';
+} 
+
+/**
+function nicoVideoScriptGen() {
+  <script src="https://embed.nicovideo.jp/watch/sm36122188/script?w=480&h=270"></script>
+}
+*/
 
 //YouTubeApi読み込みとオプション設定部分
 var tag = document.createElement('script');
