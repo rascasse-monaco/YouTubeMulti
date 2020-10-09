@@ -62,7 +62,7 @@ body {
 }
 
 #add_button {
-    background-color:#008d3baf;
+    background-color:#3da76932;
     color: white;
     border-style: none;
     border-radius:3px;
@@ -75,6 +75,12 @@ body {
 #embed_area {
     height: auto;
     margin-left: 10px;
+}
+
+#Annotation {
+    margin-left: 10px;
+    color: darkgray;
+    font-size: small;
 }
 
 input[type="submit"], input[type="reset"], input[type="button"], button{
