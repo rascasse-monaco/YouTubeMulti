@@ -41,18 +41,22 @@ function embed(){
 //埋め込みエリアに動画（iframe）を埋め込み
 function createIframe() {
 //YouTube PC スマホ短縮URL用分岐、ニコニコ動画分岐
-  let input_url = document.getElementById("input_url-" + urlNum).value;
-  let youTube_url = /youtube/ig;
-  let niconico_url = /nicovideo/ig;
+  const input_url = document.getElementById("input_url-" + urlNum).value;
+  const youTube_url = /youtube/ig;
+  const niconico_url = /nicovideo/ig;
+  const youTubeFone_url = /youtu\.be/ig;
   if (youTube_url.test(input_url)) {//youtubeの文字列があったらtrue
     globalInputUrl = input_url.split('v=')[1];//通常URL用ID抽出
     youTubeIframe();//YouTube用Iframe作成関数
   } else if (niconico_url.test(input_url)) {//nocovideoの文字列があったらtrue
     globalInputUrl = input_url.split('watch/')[1];//ニコニコ動画URL用ID抽出
     nicoVideoScriptGen();
-  } else {
+  } else if (youTubeFone_url.test(input_url)) {//nocovideoの文字列があったらtrue
     globalInputUrl = input_url.split('be/')[1];//短縮URL用ID抽出
     youTubeIframe();//YouTube用Iframe作成関数
+  } else {
+    globalInputUrl = input_url;//ニコニコ動画URL用ID抽出
+    nicoVideoScriptGen();
   }
 }
 
