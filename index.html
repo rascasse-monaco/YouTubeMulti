@@ -19,8 +19,8 @@
 
 <body>
 <!-- URLを入力するフォームやボタンをつくるエリア -->
-    <img src="mulmovlogo.svg" alt="mulmov" id="logo" height="50">
-    <div id="title">あとでみる動画をためるサイト。</div>
+    <img src="logoMain.svg" alt="logo" id="logo" height="50">
+    <div id="title">あとでみたい動画をためたり、複数動画を同時視聴するサイト。</div>
     <div id="form_button_area">
         <input type="text" class="text_area" id="input_url-1" placeholder="YouTube動画のURLをペースト">
         <select name="reso" id="set_reso" class="select_menu">
@@ -28,7 +28,7 @@
             <option value='middle' selected>動画サイズ：中</option>
             <option value='small'>動画サイズ：小</option>
         </select>
-        <input type="button" id="embed_button" value="動画を追加する" onclick="resoSet();embed()">
+        <input type="button" id="embed_button" value="動画を追加" onclick="resoSet();embed()">
     </div>
 <!-- 動画を埋め込むエリア -->
     <div id="embed_area"></div>
