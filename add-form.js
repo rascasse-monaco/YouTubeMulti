@@ -113,7 +113,7 @@ function onPlayerReady(event) {
   event.target.playVideo();
   event.target.mute();
 }
-function onPlayerStateChange(event) {}
+function onPlayerStateChange(event) {/**中身なし*/}
 
 //埋め込み動作によって不要になる要素を削除する
 function remove() {
