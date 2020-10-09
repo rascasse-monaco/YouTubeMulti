@@ -37,7 +37,6 @@ function embed(){
 
 }
 
-
 //iframeを作成
 //埋め込みエリアに動画（iframe）を埋め込み
 function createIframe() {
@@ -55,7 +54,6 @@ function createIframe() {
     globalInputUrl = input_url.split('be/')[1];//短縮URL用ID抽出
     youTubeIframe();//YouTube用Iframe作成関数
   }
-
 }
 
 //YouTube用 Iframe作成関数
@@ -146,7 +144,6 @@ function resoSet() {
       } else {
         resoArray = ['800', '450'];
       } 
-
 }
 
 //動画を埋め込みボタンの動作
@@ -180,5 +177,4 @@ function addForm() {
   embedButton.appendChild(addButton);
 
   urlNum++
-  
 }
