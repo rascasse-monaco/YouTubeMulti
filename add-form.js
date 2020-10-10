@@ -7,18 +7,25 @@ let iframe = null;
 let nicoScript = null;
 let iframeUrlList = new Array();
 
-/** ブラウザが更新される直前の処理 */
+
+/**SessionStorage部分未実装
+
+
+//ブラウザが更新される直前の処理 
 window.addEventListener('beforeunload', () =>{
 //SessionStorageに変数iframeUrlListの内容を文字列として書きこみ
   let iframeListSave = iframeUrlList.toString();
   sessionStorage.setItem('urlListStr', iframeListSave);
 });
-  /** ブラウザが更新された直後の処理 */
+//ブラウザが更新された直後の処理
 window.addEventListener('unload', () =>{
 //SessionStorageから文字列を読み込んで変数iframeUrlListの内容を配列として書きこみ
   let iframeListLoad = sessionStorage.getItem('urllistStr');
   iframeUrlList = iframeListLoad.split(',');
 });
+
+*/
+
 
 //動画埋込ボタン押下後処理用関数
 function embed(){
@@ -60,10 +67,12 @@ function createIframe() {
       videoUrl = [ /youtube/ig, /nicovideo/ig, /youtu\.be/ig ];//URLを判別するための正規表現
 
   if (videoUrl[0].test(iframeInputUrl)) {//youtubeの文字列があったらtrue
-    globalInputUrl = iframeInputUrl.split('v=')[1];//通常URL用ID抽出
+    let urLStr = iframeInputUrl.split('v=')[1];//通常URL用ID抽出
+    globalInputUrl = urLStr.slice(0, 11);//先頭から11文字取得
     youTubeIframe();//YouTube用Iframe作成関数
   } else if (videoUrl[1].test(iframeInputUrl)) {//nocovideoの文字列があったらtrue
-    globalInputUrl = iframeInputUrl.split('watch/')[1];//ニコニコ動画URL用ID抽出
+    let urLStr = iframeInputUrl.split('watch/')[1];//ニコニコ動画URL用ID抽出
+    globalInputUrl = urLStr.slice(0, 10);//先頭から10文字取得
     nicoVideoScriptGen();
   } else if (videoUrl[2].test(iframeInputUrl)) {//nocovideoの文字列があったらtrue
     globalInputUrl = iframeInputUrl.split('be/')[1];//短縮URL用ID抽出
@@ -112,7 +121,7 @@ function nicoVideoScriptGen() {
   let output_url = document.getElementById("output_url-" + urlNum);
   output_url.innerHTML = nicoScript;
 
-  iframeUrlList.push(iframe);
+  iframeUrlList.push(nicoScript);
 }
 
 //YouTubeApi読み込みとオプション設定部分
