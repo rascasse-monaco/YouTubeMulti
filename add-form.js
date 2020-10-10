@@ -5,11 +5,12 @@ let resoArray = new Array();
 let globalInputUrl = null;
 let iframe = null;
 let nicoScript = null;
+let iframeUrlList = new Array();
 
 //動画埋込ボタン押下後処理用関数
 function embed(){
   //URL未入力の場合はボタン押下無視
-  let embedUrl = document.getElementById("embedUrl-" + urlNum).value;
+  let embedUrl = document.getElementById("input_url-" + urlNum).value;
   if (embedUrl) {
     //動画埋め込みエリアの作成
     const embedArea = document.getElementById("embed_area");
