@@ -7,11 +7,24 @@ let iframe = null;
 let nicoScript = null;
 let iframeUrlList = new Array();
 
+/** ブラウザが更新される直前の処理 */
+window.addEventListener('beforeunload', () =>{
+//SessionStorageに変数iframeUrlListの内容を文字列として書きこみ
+  let iframeListSave = iframeUrlList.toString();
+  sessionStorage.setItem('urlListStr', iframeListSave);
+});
+  /** ブラウザが更新された直後の処理 */
+window.addEventListener('unload', () =>{
+//SessionStorageから文字列を読み込んで変数iframeUrlListの内容を配列として書きこみ
+  let iframeListLoad = sessionStorage.getItem('urllistStr');
+  iframeUrlList = iframeListLoad.split(',');
+});
+
 //動画埋込ボタン押下後処理用関数
 function embed(){
+    let embedUrl = document.getElementById("input_url-" + urlNum).value;
   //URL未入力の場合はボタン押下無視
-  let embedUrl = document.getElementById("input_url-" + urlNum).value;
-  if (embedUrl) {
+    if (embedUrl) {
     //動画埋め込みエリアの作成
     const embedArea = document.getElementById("embed_area");
     const span = document.createElement('span');
@@ -75,10 +88,12 @@ function youTubeIframe() {
     ' src=" https://www.youtube.com/embed/' + 
     globalInputUrl + 
     '?rel=0&  amp;enablejsapi=1&amp;widgetid=1' + 
-    '" frameborder="0"    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;   picture-in-picture"  allowfullscreen></iframe>';
+    '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 
   let output_url = document.getElementById("output_url-" + urlNum);
   output_url.innerHTML = iframe;
+
+  iframeUrlList.push(iframe);
 } 
 
 //ニコニコ動画用 埋込scriptリンク作成関数
@@ -96,6 +111,8 @@ function nicoVideoScriptGen() {
     
   let output_url = document.getElementById("output_url-" + urlNum);
   output_url.innerHTML = nicoScript;
+
+  iframeUrlList.push(iframe);
 }
 
 //YouTubeApi読み込みとオプション設定部分
