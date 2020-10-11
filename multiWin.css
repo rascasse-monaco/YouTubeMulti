@@ -64,7 +64,7 @@ body {
 }
 
 #add_button {
-    background-color:#3da76932;
+    background-color:#3da76971;
     color: white;
     border-style: none;
     border-radius:3px;
@@ -81,6 +81,15 @@ body {
 
 #Annotation {
     margin-left: 10px;
+    color: darkgray;
+    font-size: small;
+}
+
+#list {
+    margin-left: 0px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    line-height: 1.75;
     color: darkgray;
     font-size: small;
 }

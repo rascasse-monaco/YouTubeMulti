@@ -7,7 +7,6 @@ let iframe = null;
 let nicoScript = null;
 let iframeUrlList = new Array();
 
-
 /**SessionStorage部分未実装
 
 
@@ -172,9 +171,13 @@ function resoSet() {
         resoArray = ['320', '180'];
       } else if (resolution === 'middle'){
         resoArray = ['480', '270'];
-      } else {
+      } else if (resolution === 'large') {
         resoArray = ['800', '450'];
-      } 
+      } else {
+        let width = document.body.clientWidth-40;
+        let hight = parseInt(width * 0.5625, 10);
+        resoArray = [ `'${width}'`, `'${hight}'`];
+      }
 }
 
 //動画を埋め込みボタンの動作
