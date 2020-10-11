@@ -23,12 +23,6 @@
 <!-- URLを入力するフォームやボタンをつくるエリア -->
     <img src="image/logoMain.svg" alt="logo" id="logo" height="50">
     <div id="title">後でみたい動画を一時保管したり、複数動画を同時視聴したいときに使おう。</div>
-    <ol id="list">
-        <li>テキストフォームにコピーしたURLをペースト。<br>ニコ動の場合はID[例:sm99999999]でもOK。</li>
-        <li>画像サイズを選択。<br>iphone等スマホの場合は画面サイズに合わせるを選択するとブラウザの横幅に合います。</li>
-        <li>「動画を追加」ボタンを押す</li>
-        <li>動画をさらに追加したい場合は「さらに動画を追加」ボタンを押してください。</li>
-    </ol>
     <div id="form_button_area">
         <input type="text" class="text_area" id="input_url-1" placeholder="動画のURL（ニコ動の場合は動画IDでも可）">
         <select name="reso" id="set_reso" class="select_menu">
@@ -41,6 +35,12 @@
     </div>
 <!-- 動画を埋め込むエリア -->
     <div id="embed_area"></div>
+    <ol id="list">
+        <li>テキストフォームにコピーしたURLをペースト。<br>ニコ動の場合はIDでもOK。[例:sm99999999]</li>
+        <li>埋め込む動画のサイズを選択。<br>iphone等スマホの場合は「画面サイズに合わせる」を選択するとブラウザの横幅に合います。</li>
+        <li>「動画を追加」ボタンを押す</li>
+        <li>動画をさらに追加したい場合は「さらに動画を追加」ボタンを押してください。</li>
+    </ol>
     <div id="Annotation">YouTube・ニコニコ動画対応(PC・SmartPhone) ※ニコニコ生放送は非対応</div>
 
     <script src="add-form.js"></script>
