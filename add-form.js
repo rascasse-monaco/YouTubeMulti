@@ -63,7 +63,7 @@ function createIframe() {
 //YouTube PC スマホ短縮URL用分岐、ニコニコ動画分岐
   const iframeInputUrl = document.getElementById("input_url-" + urlNum).value;
   let videoUrl = new Array();
-      videoUrl = [ /youtube/ig, /nicovideo/ig, /youtu\.be/ig ];//URLを判別するための正規表現
+      videoUrl = [ /youtube/ig, /nicovideo/ig, /youtu\.be/ig, /nico\.ms/ig ];//URLを判別するための正規表現
 
   if (videoUrl[0].test(iframeInputUrl)) {//youtubeの文字列があったらtrue
     let urLStr = iframeInputUrl.split('v=')[1];//通常URL用ID抽出
@@ -73,7 +73,7 @@ function createIframe() {
     let urLStr = iframeInputUrl.split('watch/')[1];//ニコニコ動画URL用ID抽出
     globalInputUrl = urLStr.slice(0, 10);//先頭から10文字取得
     nicoVideoScriptGen();
-  } else if (videoUrl[1].test(iframeInputUrl)) {//nocovideoの文字列があったらtrue
+  } else if (videoUrl[3].test(iframeInputUrl)) {//nocovideoの文字列があったらtrue
     let urLStr = iframeInputUrl.split('nico.ms/')[1];//ニコニコ動画スマホ用URL用ID抽出
     globalInputUrl = urLStr.slice(0, 10);//先頭から10文字取得
     nicoVideoScriptGen();
