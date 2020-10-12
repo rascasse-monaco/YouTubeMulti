@@ -6,6 +6,11 @@ body {
     background-color:rgb(53, 53, 53);
 }
 
+h4 {
+    color: white;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
 .text_area {
     background-color: #ddddddf3;
     width: 330px;
