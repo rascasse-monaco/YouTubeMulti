@@ -73,7 +73,11 @@ function createIframe() {
     let urLStr = iframeInputUrl.split('watch/')[1];//ニコニコ動画URL用ID抽出
     globalInputUrl = urLStr.slice(0, 10);//先頭から10文字取得
     nicoVideoScriptGen();
-  } else if (videoUrl[2].test(iframeInputUrl)) {//nocovideoの文字列があったらtrue
+  } else if (videoUrl[1].test(iframeInputUrl)) {//nocovideoの文字列があったらtrue
+    let urLStr = iframeInputUrl.split('nico.ms/')[1];//ニコニコ動画スマホ用URL用ID抽出
+    globalInputUrl = urLStr.slice(0, 10);//先頭から10文字取得
+    nicoVideoScriptGen();
+  }  else if (videoUrl[2].test(iframeInputUrl)) {//nocovideoの文字列があったらtrue
     globalInputUrl = iframeInputUrl.split('be/')[1];//短縮URL用ID抽出
     youTubeIframe();//YouTube用Iframe作成関数
   } else {
