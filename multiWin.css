@@ -47,6 +47,7 @@ h4 {
 #title {
     color: white;
     letter-spacing: 0.01em;
+    line-height: 1.75;
     margin-left: 10px;
 }
 #form_button_area {
