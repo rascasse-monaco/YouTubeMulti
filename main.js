@@ -3,14 +3,11 @@
 let urlNum = 1 ;//動画URLのナンバー
 let resoArray = new Array();
 let globalInputUrl = null;
-let iframe = null;
-let nicoScript = null;
 let iframeUrlList = new Array();
-let iframeUrlListJSON = new Array();
-
 
 //iframeUrlListの値をローカルストレージに保存
 function iframeSetLocalStorage(){
+  let iframeUrlListJSON = new Array();
   iframeUrlListJSON = JSON.stringify(iframeUrlList);
   localStorage.setItem('iframeUrl', iframeUrlListJSON);
 //テストlog出力
@@ -87,6 +84,7 @@ function youTubeIframe() {
    * ?enablejsapi=1によって"https://www.youtube.com/iframe_api"を使用可能にして、
    * apiオプションを追加できるようにする。(できてない)
   */
+  let iframe = null;
   iframe = 
     `<iframe id="player" width=${resoArray[0]} height=${resoArray[1]} src=" https://www.youtube.com/embed/${globalInputUrl}?rel=0&amp;enablejsapi=1&amp;widgetid=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
 
@@ -99,6 +97,7 @@ function youTubeIframe() {
 //ニコニコ動画用 埋込scriptリンク作成関数
 function nicoVideoScriptGen() {
   //iframeに動画のIDとサイズ等を入れ込んで代入
+  let nicoScript = null;
   nicoScript =
     `<iframe allowfullscreen="allowfullscreen" allow="autoplay" frameborder="0" width=${resoArray[0]} height=${resoArray[1]} src="https://embed.nicovideo.jp/watch/${globalInputUrl}?oldScript=1&amp;referer=&amp;from=0&amp;allowProgrammaticFullScreen=1" style="max-width: 100%; "></iframe>`; 
   
