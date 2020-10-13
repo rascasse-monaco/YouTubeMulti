@@ -33,10 +33,10 @@ function embed(){
     if (embedUrl) {
     //動画埋め込みエリアの作成
     const embedArea = document.getElementById("embed_area");
-    const span = document.createElement('span');
-    span.id = 'output_url-' + urlNum;
-    span.setAttribute("class", "embed");
-    embedArea.appendChild(span);
+    const div = document.createElement('div');
+    div.id = 'output_url-' + urlNum;
+    div.setAttribute("class", "embed");
+    embedArea.appendChild(div);
 
     createIframe(urlNum);
 
@@ -93,14 +93,7 @@ function youTubeIframe() {
    * apiオプションを追加できるようにする。(できてない)
   */
   iframe = 
-    '<iframe id="player" width= ' + 
-    resoArray[0] + 
-    ' height=' + 
-    resoArray[1] + 
-    ' src=" https://www.youtube.com/embed/' + 
-    globalInputUrl + 
-    '?rel=0&  amp;enablejsapi=1&amp;widgetid=1' + 
-    '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    `<iframe id="player" width=${resoArray[0] } height=${resoArray[1]} src=" https://www.youtube.com/embed/${globalInputUrl}?rel=0&amp;enablejsapi=1&amp;widgetid=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
 
   let output_url = document.getElementById("output_url-" + urlNum);
   output_url.innerHTML = iframe;
@@ -112,15 +105,8 @@ function youTubeIframe() {
 function nicoVideoScriptGen() {
   //iframeに動画のIDとサイズ等を入れ込んで代入
   nicoScript =
-    '<iframe allowfullscreen="allowfullscreen" allow="autoplay" frameborder="0" width="' +
-    resoArray[0] + 
-    '" height="' + 
-    resoArray[1] +
-    '" src="' +  
-    'https://embed.nicovideo.jp/watch/' +
-    globalInputUrl +
-    '?oldScript=1&amp;referer=&amp;from=0&amp;allowProgrammaticFullScreen=1" style="max-width: 100%;"></iframe>'
-    
+    `<iframe allowfullscreen="allowfullscreen" allow="autoplay" frameborder="0" width=${resoArray[0]} height=${resoArray[1]} src="https://  embed.nicovideo.jp/watch/${globalInputUrl}?oldScript=1&amp;referer=&amp;from=0&amp;allowProgrammaticFullScreen=1" style="max-width: 100%; "></iframe>`; 
+  
   let output_url = document.getElementById("output_url-" + urlNum);
   output_url.innerHTML = nicoScript;
 
