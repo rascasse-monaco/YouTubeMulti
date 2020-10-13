@@ -6,25 +6,18 @@ let globalInputUrl = null;
 let iframe = null;
 let nicoScript = null;
 let iframeUrlList = new Array();
+let iframeUrlListJSON = new Array();
 
-/**SessionStorage部分未実装
 
-
-//ブラウザが更新される直前の処理 
-window.addEventListener('beforeunload', () =>{
-//SessionStorageに変数iframeUrlListの内容を文字列として書きこみ
-  let iframeListSave = iframeUrlList.toString();
-  sessionStorage.setItem('urlListStr', iframeListSave);
-});
-//ブラウザが更新された直後の処理
-window.addEventListener('unload', () =>{
-//SessionStorageから文字列を読み込んで変数iframeUrlListの内容を配列として書きこみ
-  let iframeListLoad = sessionStorage.getItem('urllistStr');
-  iframeUrlList = iframeListLoad.split(',');
-});
-
-*/
-
+//iframeUrlListの値をローカルストレージに保存
+function iframeSetLocalStorage(){
+  iframeUrlListJSON = JSON.stringify(iframeUrlList);
+  localStorage.setItem('iframeUrl', iframeUrlListJSON);
+//テストlog出力
+  let iframeUrlListJSONNew = localStorage.getItem('iframeUrl');
+  let iframeUrlListJSONObj = JSON.parse(iframeUrlListJSONNew);
+  console.log(iframeUrlListJSONObj);
+}
 
 //動画埋込ボタン押下後処理用関数
 function embed(){
@@ -50,6 +43,8 @@ function embed(){
     parentButton.appendChild(addButton);
 
     remove();
+
+    iframeSetLocalStorage();
 
   } else {}
 
@@ -93,7 +88,7 @@ function youTubeIframe() {
    * apiオプションを追加できるようにする。(できてない)
   */
   iframe = 
-    `<iframe id="player" width=${resoArray[0] } height=${resoArray[1]} src=" https://www.youtube.com/embed/${globalInputUrl}?rel=0&amp;enablejsapi=1&amp;widgetid=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    `<iframe id="player" width=${resoArray[0]} height=${resoArray[1]} src=" https://www.youtube.com/embed/${globalInputUrl}?rel=0&amp;enablejsapi=1&amp;widgetid=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
 
   let output_url = document.getElementById("output_url-" + urlNum);
   output_url.innerHTML = iframe;
@@ -113,8 +108,7 @@ function nicoVideoScriptGen() {
   iframeUrlList.push(nicoScript);
 }
 
-
-//YouTubeApi読み込みとオプション設定部分
+/**YouTubeApi読み込みとオプション設定部分未実装
 var tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -134,7 +128,8 @@ function onPlayerReady(event) {
   event.target.playVideo();
   event.target.mute();
 }
-function onPlayerStateChange(event) {/**中身なし*/}
+function onPlayerStateChange(event) {}
+*/
 
 //埋め込み動作によって不要になる要素を削除する
 function remove() {
