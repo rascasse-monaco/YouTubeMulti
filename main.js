@@ -105,13 +105,14 @@ function youTubeIframe() {
 function nicoVideoScriptGen() {
   //iframeに動画のIDとサイズ等を入れ込んで代入
   nicoScript =
-    `<iframe allowfullscreen="allowfullscreen" allow="autoplay" frameborder="0" width=${resoArray[0]} height=${resoArray[1]} src="https://  embed.nicovideo.jp/watch/${globalInputUrl}?oldScript=1&amp;referer=&amp;from=0&amp;allowProgrammaticFullScreen=1" style="max-width: 100%; "></iframe>`; 
+    `<iframe allowfullscreen="allowfullscreen" allow="autoplay" frameborder="0" width=${resoArray[0]} height=${resoArray[1]} src="https://embed.nicovideo.jp/watch/${globalInputUrl}?oldScript=1&amp;referer=&amp;from=0&amp;allowProgrammaticFullScreen=1" style="max-width: 100%; "></iframe>`; 
   
   let output_url = document.getElementById("output_url-" + urlNum);
   output_url.innerHTML = nicoScript;
 
   iframeUrlList.push(nicoScript);
 }
+
 
 //YouTubeApi読み込みとオプション設定部分
 var tag = document.createElement('script');
