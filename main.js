@@ -23,13 +23,30 @@ function embed(){
     if (embedUrl) {
     //動画埋め込みエリアの作成
     const embedArea = document.getElementById("embed_area");
-    const div = document.createElement('div');
-    div.id = 'output_url-' + urlNum;
-    div.setAttribute("class", "embed");
-    embedArea.appendChild(div);
+    const embedContainer = document.createElement('div');
+      embedContainer.id = 'container-' + urlNum;
+      embedContainer.setAttribute("class", "containerVideo");
+    embedArea.appendChild(embedContainer);
+    
+        //埋込用子要素
+        const video = document.getElementById(embedContainer.id);
+        const embTag = document.createElement('div');
+          embTag.id = 'output_url-' + urlNum;
+          embTag.setAttribute("class", "embed");
+        video.appendChild(embTag);
 
-    createIframe(urlNum);
+            createIframe(urlNum);
 
+            //削除ボタンの作成
+            const removeVideoArea = document.getElementById(embedContainer.id);
+            const removeSubBtn = document.createElement('input');
+              removeSubBtn.type = 'submit';
+              removeSubBtn.value = 'この動画を削除';
+              removeSubBtn.id = 'removeBtn-' + urlNum;
+              removeSubBtn.setAttribute("class", "removeBtn");
+              removeSubBtn.setAttribute("onClick", "remVideo(this.id)");
+            removeVideoArea.appendChild(removeSubBtn);
+          
     //form_button_areaに動画を追加ボタンを作成
     const parentButton = document.getElementById('form_button_area');
     const addButton = document.createElement('input');
@@ -48,6 +65,14 @@ function embed(){
   embedUrl = null;
 
 }
+
+//動画を削除ボタン関数
+function remVideo(id){
+  console.log ('削除するIDは' + id);
+  let containerID = 'container-' + id.split('removeBtn-')[1];
+  let rmoveVideo = document.getElementById(containerID);
+  rmoveVideo.remove(id);
+  }
 
 //iframeを作成
 //埋め込みエリアに動画（iframe）を埋め込み
@@ -159,7 +184,7 @@ function resoSet() {
       } else if (resolution === 'large') {
         resoArray = ['800', '450'];
       } else {
-        let width = document.body.clientWidth-20;
+        let width = document.body.clientWidth-30;
         let hight = parseInt(width * 0.5625, 10);
         resoArray = [ `'${width}'`, `'${hight}'`];
       }
