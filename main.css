@@ -28,6 +28,9 @@ h4 {
     color: white;
     border-style: none;
     border-radius:3px;
+    height: 25px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .select_menu {
