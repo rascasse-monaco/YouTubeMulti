@@ -184,7 +184,7 @@ function resoSet() {
       } else if (resolution === 'large') {
         resoArray = ['800', '450'];
       } else {
-        let width = document.body.clientWidth-30;
+        let width = document.body.clientWidth-20;
         let hight = parseInt(width * 0.5625, 10);
         resoArray = [ `'${width}'`, `'${hight}'`];
       }

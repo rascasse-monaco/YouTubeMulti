@@ -4,23 +4,23 @@
 
 body {
     background-color:rgb(53, 53, 53);
+    margin: 0px;
 }
 
 h4 {
     color: white;
-    margin-left: 10px;
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 
 .containerVideo {
     display: inline-block;
-    margin-left: 10px;
     margin-bottom: 10px;
     padding: 10px 5px 10px 10px;
     background-color: rgb(37, 37, 37);
 }
 .embed {
-    margin-right: 6px;
+    margin-right: 0px;
 }
 
 .removeBtn {
@@ -30,7 +30,6 @@ h4 {
     border-radius:3px;
     height: 25px;
     margin-top: 5px;
-    margin-bottom: 5px;
 }
 
 .select_menu {
@@ -67,17 +66,6 @@ h4 {
 
 }
 
-#embed_button {
-    background-color:#e6a800d8;
-    color: white;
-    border-style: none;
-    border-radius:3px;
-    height: 35px;
-    padding: 0px 10px;
-
-}
-
-
 #Annotation {
     margin-left: 10px;
     margin-bottom: 10px;
@@ -85,18 +73,24 @@ h4 {
     font-size: small;
 }
 
-#logo {
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-bottom: 10px;
+#bottom {
+    background-color: rgb(37, 37, 37);
+    margin: 0px;
+    padding-top: 5px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    padding-left: 10px;
 }
 
-#title {
+#embed_button {
+    background-color:#e6a800d8;
     color: white;
-    letter-spacing: 0.01em;
-    line-height: 1.75;
-    margin-left: 10px;
+    border-style: none;
+    border-radius:3px;
+    height: 35px;
+    padding: 0px 10px;
 }
+
 #form_button_area {
     font-size: 0;
     height: auto;
@@ -105,13 +99,27 @@ h4 {
     margin-left: 10px;
 }
 
+#header {
+    background-color: rgb(37, 37, 37);
+    padding-left: 10px;
+}
+
 #list {
-    margin-left: 0px;
     margin-top: 10px;
-    margin-bottom: 20px;
     line-height: 1.75;
     color: lightgray;
     font-size: small;
+}
+
+#logo {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#title {
+    color: white;
+    letter-spacing: 0.01em;
+    line-height: 1.75;
 }
 
 input[type="submit"], input[type="reset"], input[type="button"], button{
