@@ -182,7 +182,7 @@ function resoSet() {
       } else if (resolution === 'middle'){
         resoArray = ['480', '270'];
       } else if (resolution === 'large') {
-        resoArray = ['800', '450'];
+        resoArray = ['640', '360'];
       } else {
         let width = document.body.clientWidth-20;
         let hight = parseInt(width * 0.5625, 10);
