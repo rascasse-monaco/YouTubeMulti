@@ -67,7 +67,6 @@ h4 {
 }
 
 #Annotation {
-    margin-bottom: 10px;
     color: darkgray;
     font-size: small;
 }
@@ -101,15 +100,18 @@ h4 {
 
 #header {
     background-color:rgb(53, 53, 53);
+    margin-bottom: 10px;
     padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
 }
 
 #list {
-    margin-top: 0px;
-    margin-left: 0px;
-    line-height: 1.75;
     color: lightgray;
     font-size: small;
+    margin: 10px 0px;
+    padding-left: 20px;
+    line-height: 1.75;
 }
 
 #logo {
@@ -119,7 +121,6 @@ h4 {
 
 #title {
     color: white;
-    letter-spacing: 0.01em;
     line-height: 1.75;
 }
 
