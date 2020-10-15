@@ -1,6 +1,6 @@
 'use strict';
 
-let urlNum = 1 ;//動画URLのナンバー
+let urlNum = 1;//動画URLのナンバー
 let resoArray = new Array();
 let globalInputUrl = null;
 let iframeUrlList = new Array();
@@ -62,7 +62,7 @@ function embed(){
 
   } else {}
 
-  embedUrl = null;
+embedUrl = null;
 
 }
 
@@ -175,7 +175,6 @@ function remove() {
 
 //セレクトメニューの動画の大きさの選択肢から縦横サイズの配列を代入する
 function resoSet() {
-
   let resolution = document.getElementById('set_reso').value;
       if (resolution === 'small') {
         resoArray = ['320', '180'];
