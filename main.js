@@ -3,7 +3,8 @@
 let urlNum = 1;//動画URLのナンバー
 let resoArray = new Array();
 let globalInputUrl = null;
-let iframeUrlList = new Array();
+let iframeUrlList = new Object();
+
 
 //iframeUrlListの値をローカルストレージに保存
 function iframeSetLocalStorage(){
@@ -11,9 +12,14 @@ function iframeSetLocalStorage(){
   iframeUrlListJSON = JSON.stringify(iframeUrlList);
   localStorage.setItem('iframeUrl', iframeUrlListJSON);
 //テストlog出力
+
+  console.log(iframeGetLocalStorage());
+}
+
+function iframeGetLocalStorage() {
   let iframeUrlListJSONNew = localStorage.getItem('iframeUrl');
   let iframeUrlListJSONObj = JSON.parse(iframeUrlListJSONNew);
-  console.log(iframeUrlListJSONObj);
+  return iframeUrlListJSONObj
 }
 
 //動画埋込ボタン押下後処理用関数
@@ -37,15 +43,29 @@ function embed(){
 
             createIframe(urlNum);
 
-            //削除ボタンの作成
-            const removeVideoArea = document.getElementById(embedContainer.id);
-            const removeSubBtn = document.createElement('input');
-              removeSubBtn.type = 'submit';
-              removeSubBtn.value = 'この動画を削除';
-              removeSubBtn.id = 'removeBtn-' + urlNum;
-              removeSubBtn.setAttribute("class", "removeBtn");
-              removeSubBtn.setAttribute("onClick", "remVideo(this.id)");
-            removeVideoArea.appendChild(removeSubBtn);
+      //変数iframeUrlListに削除ボタンと同じIDを添え字としたURLのオブジェクトを保存する
+      let getNow = new Date();
+      let idNow = 'Time-' +
+                    getNow.getFullYear() + 
+                    (getNow.getMonth() + 1) +
+                    getNow.getDate() +
+                    getNow.getHours() + 
+                    getNow.getMinutes() + 
+                    getNow.getSeconds() +
+                    getNow.getMilliseconds();
+    
+      let urlID = idNow;
+      iframeUrlList[urlID + ' removeBtn-' + urlNum] = globalInputUrl;
+
+      //削除ボタンの作成
+      const removeVideoArea = document.getElementById(embedContainer.id);
+      const removeSubBtn = document.createElement('input');
+        removeSubBtn.type = 'submit';
+        removeSubBtn.value = 'この動画を削除';
+        removeSubBtn.id = urlID + ' removeBtn-' + urlNum;
+        removeSubBtn.setAttribute("class", "removeBtn");
+        removeSubBtn.setAttribute("onClick", "remVideo(this.id)");
+      removeVideoArea.appendChild(removeSubBtn);
           
     //form_button_areaに動画を追加ボタンを作成
     const parentButton = document.getElementById('form_button_area');
@@ -60,6 +80,8 @@ function embed(){
 
     iframeSetLocalStorage();
 
+    console.log (iframeUrlList);
+    
   } else {}
 
 embedUrl = null;
@@ -115,8 +137,7 @@ function youTubeIframe() {
 
   let output_url = document.getElementById("output_url-" + urlNum);
   output_url.innerHTML = iframe;
-
-  iframeUrlList.push(iframe);
+  
 } 
 
 //ニコニコ動画用 埋込scriptリンク作成関数
@@ -129,7 +150,6 @@ function nicoVideoScriptGen() {
   let output_url = document.getElementById("output_url-" + urlNum);
   output_url.innerHTML = nicoScript;
 
-  iframeUrlList.push(nicoScript);
 }
 
 /**YouTubeApi読み込みとオプション設定部分未実装
