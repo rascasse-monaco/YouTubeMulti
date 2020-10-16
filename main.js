@@ -4,11 +4,13 @@ let urlNum = 1;//動画URLのナンバー
 let resoArray = new Array();
 let globalInputUrl = null;
 let iframeUrlList = new Object();
-/**
-//localStorageからurlListのオブジェクト読み込み
-if (iframeUrlList) {
-  iframeUrlList = iframeGetLocalStorage();
-} else {}
+    iframeUrlList = {};
+
+//localStorageからurlListのオブジェクトを読み込んで代入
+
+iframeUrlList = iframeGetLocalStorage();
+
+
 
 //iframeUrlListの値をローカルストレージに保存
 function iframeSetLocalStorage(){
@@ -16,16 +18,16 @@ function iframeSetLocalStorage(){
   iframeUrlListJSON = JSON.stringify(iframeUrlList);
   localStorage.setItem('iframeUrl', iframeUrlListJSON);
 //テストlog出力
-
   console.log(iframeGetLocalStorage());
 }
+
 //iframeUrlListの値をローカルストレージから取り出す
 function iframeGetLocalStorage() {
   let iframeUrlListJSONNew = localStorage.getItem('iframeUrl');
   let iframeUrlListJSONObj = JSON.parse(iframeUrlListJSONNew);
   return iframeUrlListJSONObj
 }
-*/
+
 
 //動画埋込ボタン押下後処理用関数
 function embed(){
@@ -83,12 +85,10 @@ function embed(){
       addButton.setAttribute("onClick", "addForm(urlNum)");
     parentButton.appendChild(addButton);
 
-    //変数iframeUrlListに削除ボタンと同じIDを添え字としたURLのオブジェクトを保存する
     remove();
     //変数iframeUrlListに削除ボタンと同じIDを添え字としたURLのオブジェクトを保存する
     iframeUrlList['removeBtn-' + urlNum + '-' + urlID] = globalInputUrl;
-
-    //iframeSetLocalStorage();
+    iframeSetLocalStorage();
     //iframeUrlListの中身を確認するログ
     console.log (iframeUrlList);
     
