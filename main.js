@@ -5,11 +5,8 @@ let resoArray = new Array();
 let globalInputUrl = new String();
 let iframeUrlList = new Object();
 
-removeAll();
-
 //全て削除ボタン作成
 function removeAll() {
-  if (!iframeUrlList) {
     const removeAll = document.getElementById('removeAll');
     const removeAllButton = document.createElement('input');
       removeAllButton.type = 'button';
@@ -18,7 +15,6 @@ function removeAll() {
       removeAllButton.setAttribute("class", "removeBtn");
       removeAllButton.setAttribute("onClick", "refreesh()");
       removeAll.appendChild(removeAllButton);
-  } else {} 
 }
 
 //動画を更新ボタンの動作
@@ -47,6 +43,11 @@ function iframeGetLocalStorage() {
   return iframeUrlListJSONObj
 }
 
+//ローカルストレージにデータが入っていたらすべて削除ボタン作成
+if (iframeGetLocalStorage()) {
+  removeAll();
+} else {}
+
 
 //動画埋込ボタン押下後処理用関数
 function embed(){
@@ -67,7 +68,11 @@ function embed(){
 
     let setListID = 'removeBtn-' + urlNum + '-' + urlID;
 
-    removeAll();
+    //全て動画を削除ボタンあったらなにもしない、なかったら作る
+    if (document.getElementById('removeAllbutton')) {
+    } else {
+      removeAll();  
+    }
 
     //URL未入力の場合はボタン押下無視
     if (embedUrl) {
