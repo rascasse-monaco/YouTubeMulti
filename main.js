@@ -25,15 +25,15 @@ function removeAll() {
 
 //localStorageからurlListのオブジェクトを読み込んで代入
 
-iframeUrlList = iframeGetLocalStorage();
+if (iframeGetLocalStorage()) {
+  iframeUrlList = iframeGetLocalStorage();
+} else {}
 
 //iframeUrlListの値をローカルストレージに保存
 function iframeSetLocalStorage(){
   let iframeUrlListJSON = new Array();
   iframeUrlListJSON = JSON.stringify(iframeUrlList);
   localStorage.setItem('iframeUrl', iframeUrlListJSON);
-//テストlog出力
-  console.log(iframeGetLocalStorage());
 }
 
 //iframeUrlListの値をローカルストレージから取り出す
@@ -113,7 +113,8 @@ function embed(){
 
     remove();
     //変数iframeUrlListに削除ボタンと同じIDを添え字としたURLのオブジェクトを保存する
-    iframeUrlList = { ['removeBtn-' + urlNum + '-' + urlID]: globalInputUrl };//ここがうまくいかない。
+    iframeUrlList[`removeBtn-${urlNum}-${urlID}`] = globalInputUrl;
+  
    
     //iframeUrlList = globalInputUrl;
     iframeSetLocalStorage();
