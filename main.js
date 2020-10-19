@@ -131,18 +131,10 @@ function deleteList(id) {
   delete iframeUrlList[id];
   //当該ボタンの動画を削除したiframeUrlListをローカルストレージに代入;
   iframeSetLocalStorage();
-  //iframeUrlListに何も入っていないとき全てを削除ボタンを削除
+  //iframeUrlListに何も入っていないとき全てを削除ボタンを削除(最後の動画が削除されたときリロードして最初の画面にもどる)
   if (Object.keys(iframeUrlList).length === 0) {
-    console.log (Object.keys(iframeUrlList).length);
-    console.log (`更新しました`);
-    delRmvAllBtn();
+    refresh();
   } else {}
-}
-
-//「埋め込んだ動画をすべて削除」ボタンを削除する関数
-function delRmvAllBtn () {
-  const removeAll = document.getElementById('removeAllbutton'); 
-  removeAll.remove();
 }
 
 //iframeを作成
