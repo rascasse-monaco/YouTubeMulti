@@ -59,12 +59,6 @@ function embed(){
                   getNow.getMilliseconds();
     let urlID = idNow;
 
-    //全て動画を削除ボタンあったらなにもしない、なかったら作る
-    if (document.getElementById('removeAllbutton')) {
-    } else {
-      removeAll();  
-    }
-
     //URL未入力の場合はボタン押下無視
     if (embedUrl) {
     //動画埋め込みエリアの作成
@@ -110,6 +104,14 @@ function embed(){
     iframeSetLocalStorage();
     //iframeUrlListの中身を確認するログ
     console.log (iframeUrlList);
+
+        //全て動画を削除ボタンあったらなにもしない、なかったら作る document.getElementById('removeAllbutton')
+    if (iframeUrlList) {
+      if (document.getElementById('removeAllbutton')){
+      } else {
+        removeAll();
+      }
+    } else {}
     
   } else {}
 
