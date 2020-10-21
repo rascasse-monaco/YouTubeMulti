@@ -120,6 +120,7 @@ function embed(){
 
         //iframeUrlListをローカルストレージに代入;
         iframeSetLocalStorage();
+        
         //resoArrayをローカルストレージに保存
         resoArraySetLocalStorage();
 
