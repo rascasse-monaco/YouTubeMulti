@@ -3,7 +3,7 @@
 let urlNum = 1;//動画URLのナンバー
 let resoArray = new Array();
 let globalInputUrl = new String();
-let iframeUrlList = new Object();
+let iframeUrlList = new Map();
 
 //全て削除ボタン作成
 function removeAll() {
@@ -25,15 +25,17 @@ function refresh() {
 }
 //iframeUrlListの値をローカルストレージに保存
 function iframeSetLocalStorage(){
-    let iframeUrlListJSON = new Array();
-    iframeUrlListJSON = JSON.stringify(iframeUrlList);
+    let iframeUrlListJSON = new Map();
+    iframeUrlListJSON = JSON.stringify([...iframeUrlList]);//スプレッド構文[...]
+    console.log(iframeUrlListJSON);
     localStorage.setItem('iframeUrlJson', iframeUrlListJSON);
 }
 //iframeUrlListの値をローカルストレージから取り出す
 function iframeGetLocalStorage() {
     let iframeUrlListJSONNew = localStorage.getItem('iframeUrlJson');
     let iframeUrlListJSONObj = JSON.parse(iframeUrlListJSONNew);
-    return iframeUrlListJSONObj
+    let map = new Map(iframeUrlListJSONObj);//JSON.praseしたものをMapオブジェクトに変換する。
+    return map
 }
 //resoArrayの値をローカルストレージに保存
 function resoArraySetLocalStorage(){
@@ -113,8 +115,8 @@ function embed(){
         addBtnfunc();
         //埋め込み動作によって不要になる要素を削除する
         remove();
-        //変数iframeUrlListに削除ボタンと同じIDを添え字としたURLのオブジェクトを保存する
-        iframeUrlList[`removeBtn_${urlNum}_${urlID}`] = globalInputUrl;
+        //MapオブジェクトのiframeUrlListに削除ボタンと同じIDを添え字としたURLのオブジェクトを保存する
+        iframeUrlList.set(`removeBtn_${urlNum}_${urlID}`, globalInputUrl);
 
         //iframeUrlListをローカルストレージに代入;
         iframeSetLocalStorage();
@@ -154,12 +156,11 @@ function remVideo(id){
 //iframeUrlListから削除した動画のIDを削除する関数
 function deleteList(id) {
     console.log (`${id}を削除する処理を実行`);
-    //console.log (Object.keys(iframeUrlList).length);
-    delete iframeUrlList[id];
+    iframeUrlList.delete(id);//mapオブジェクトからキー「id」を削除。
     //当該ボタンの動画を削除したiframeUrlListをローカルストレージに代入;
     iframeSetLocalStorage();
     //iframeUrlListに何も入っていないとき全てを削除ボタンを削除(最後の動画が削除されたときリロードして最初の画面にもどる)
-    if (Object.keys(iframeUrlList).length === 0) {
+    if (iframeUrlList.size === 0) {
       refresh();
     } else {}
 }
