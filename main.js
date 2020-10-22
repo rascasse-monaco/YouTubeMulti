@@ -9,12 +9,12 @@ let iframeUrlList = new Map();
 function removeAll() {
     const removeAll = document.getElementById('removeAll');
     const removeAllButton = document.createElement('input');
-      removeAllButton.type = 'button';
-      removeAllButton.id = 'removeAllbutton';
-      removeAllButton.value = '埋め込んだ動画をすべて削除';
-      removeAllButton.setAttribute("class", "removeBtn");
-      removeAllButton.setAttribute("onClick", "refresh()");
-      removeAll.appendChild(removeAllButton);
+          removeAllButton.type = 'button';
+          removeAllButton.id = 'removeAllbutton';
+          removeAllButton.value = '埋め込んだ動画をすべて削除';
+          removeAllButton.setAttribute("class", "removeBtn");
+          removeAllButton.setAttribute("onClick", "refresh()");
+    removeAll.appendChild(removeAllButton);
 }
 //全て削除ボタンの動作
 function refresh() {
@@ -102,15 +102,7 @@ function embed(){
         createIframe();
 
         //削除ボタンの作成
-        const removeVideoArea = document.getElementById(embedContainer.id);
-        const removeSubBtn = document.createElement('input');
-          removeSubBtn.type = 'submit';
-          removeSubBtn.value = 'この動画を削除';
-          removeSubBtn.id = 'removeBtn_' + urlNum + '_' + urlID;
-          removeSubBtn.setAttribute("class", "removeBtn");
-          removeSubBtn.setAttribute("onClick", "remVideo(this.id);deleteList(this.id)");
-        removeVideoArea.appendChild(removeSubBtn);
-
+        removeThisVideo(embedContainer.id, urlNum, urlID);
         //form_button_areaに動画を追加ボタンを作成
         addBtnfunc();
         //埋め込み動作によって不要になる要素を削除する
@@ -140,13 +132,23 @@ embedUrl = null;
 function addBtnfunc() {
     const parentButton = document.getElementById('form_button_area');
     const addButton = document.createElement('input');
-      addButton.type = 'button';
-      addButton.id = 'add_button';
-      addButton.value = 'さらに動画を追加';
-      addButton.setAttribute("onClick", "addForm(urlNum)");
+          addButton.type = 'button';
+          addButton.id = 'add_button';
+          addButton.value = 'さらに動画を追加';
+          addButton.setAttribute("onClick", "addForm(urlNum)");
     parentButton.appendChild(addButton);
 }
-
+//削除ボタンの作成
+function removeThisVideo(remVideoAreaID, remBtnurlNum, remBtnurlID) {
+  const removeVideoArea = document.getElementById(remVideoAreaID);
+  const removeSubBtn = document.createElement('input');
+        removeSubBtn.type = 'submit';
+        removeSubBtn.value = 'この動画を削除';
+        removeSubBtn.id = 'removeBtn_' + remBtnurlNum + '_' + remBtnurlID;
+        removeSubBtn.setAttribute("class", "removeBtn");
+        removeSubBtn.setAttribute("onClick", "remVideo(this.id);deleteList(this.id)");
+  removeVideoArea.appendChild(removeSubBtn);
+}
 //動画を削除ボタン関数
 function remVideo(id){
     console.log ('削除するIDは' + id);
