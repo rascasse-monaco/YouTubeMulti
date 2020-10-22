@@ -88,12 +88,13 @@ function embed(){
         //動画埋め込みエリアの作成
         const embedArea = document.getElementById("embed_area");
         const embedContainer = document.createElement('div');
-          embedContainer.id = 'container_' + urlNum + '_' + urlID;
+        const embedID = 'container_' + urlNum + '_' + urlID;
+          embedContainer.id = embedID;
           embedContainer.setAttribute("class", "containerVideo");
         embedArea.appendChild(embedContainer);
 
             //埋込用子要素
-            const video = document.getElementById(embedContainer.id);
+            const video = document.getElementById(embedID);
             const embTag = document.createElement('div');
               embTag.id = 'output_url-' + urlNum;
               embTag.setAttribute("class", "embed");
