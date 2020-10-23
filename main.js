@@ -85,25 +85,11 @@ function embed(){
 
     //URL未入力の場合はボタン押下無視
     if (embedUrl) {
-        //動画埋め込みエリアの作成
-        const embedArea = document.getElementById("embed_area");
-        const embedContainer = document.createElement('div');
-        const embedID = 'container_' + urlNum + '_' + urlID;
-          embedContainer.id = embedID;
-          embedContainer.setAttribute("class", "containerVideo");
-        embedArea.appendChild(embedContainer);
-
-            //埋込用子要素
-            const video = document.getElementById(embedID);
-            const embTag = document.createElement('div');
-              embTag.id = 'output_url-' + urlNum;
-              embTag.setAttribute("class", "embed");
-            video.appendChild(embTag);
-
+      
+        //削除ボタンの作成（同時に埋め込みエリアの作成）
+        removeThisVideo(embArea(urlNum, urlID), urlNum, urlID);
+        //Iframe作成
         createIframe();
-
-        //削除ボタンの作成
-        removeThisVideo(embedContainer.id, urlNum, urlID);
         //form_button_areaに動画を追加ボタンを作成
         addBtnfunc();
         //埋め込み動作によって不要になる要素を削除する
@@ -128,6 +114,29 @@ function embed(){
 embedUrl = null;
 }
 //------------------------------------
+
+/**
+ * 動画埋め込みエリアの作成
+ * @param {Number} embAreaurlNum 通し番号
+ * @param {String} embAreaurlID 埋込時間入れたID
+ * @return {String} コンテナID
+ */
+function embArea(embAreaurlNum, embAreaurlID) {
+  const embedArea = document.getElementById("embed_area");
+  const embedContainer = document.createElement('div');
+  const embedID = 'container_' + embAreaurlNum + '_' + embAreaurlID;
+    embedContainer.id = embedID;
+    embedContainer.setAttribute("class", "containerVideo");
+  embedArea.appendChild(embedContainer);
+
+      //埋込用子要素
+      const video = document.getElementById(embedID);
+      const embTag = document.createElement('div');
+        embTag.id = 'output_url-' + embAreaurlNum;
+        embTag.setAttribute("class", "embed");
+      video.appendChild(embTag);
+      return embedID;
+}
 
 //form_button_areaに動画を追加ボタンを作成関数
 function addBtnfunc() {
@@ -204,7 +213,7 @@ function youTubeIframe() {
      * ?enablejsapi=1によって"https://www.youtube.com/iframe_api"を使用可能にして、
      * apiオプションを追加できるようにする。(できてない)
     */
-    let iframe = null;
+    let iframe = new String();
     iframe = 
       `<iframe id="player" width=${resoArray[0]} height=${resoArray[1]} src=" https://www.youtube.com/embed/${globalInputUrl}?rel=0&amp;  enablejsapi=1&amp;widgetid=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;  picture-in-picture" allowfullscreen></iframe>`;
 
@@ -215,7 +224,7 @@ function youTubeIframe() {
 //ニコニコ動画用 埋込scriptリンク作成関数
 function nicoVideoScriptGen() {
     //iframeに動画のIDとサイズ等を入れ込んで代入
-    let nicoScript = null;
+    let nicoScript = new String();
     nicoScript =
       `<iframe allowfullscreen="allowfullscreen" allow="autoplay" frameborder="0" width=${resoArray[0]} height=${resoArray[1]} src="https://  embed.nicovideo.jp/watch/${globalInputUrl}?oldScript=1&amp;referer=&amp;from=0&amp;allowProgrammaticFullScreen=1" style="max-width:   100%; "></iframe>`; 
 

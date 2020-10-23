@@ -3,18 +3,18 @@
 let urlNum = 1;//動画URLのナンバー
 let resoArray = new Array();
 let globalInputUrl = new String();
-let iframeUrlList = new Object();
+let iframeUrlList = new Map();
 
 //全て削除ボタン作成
 function removeAll() {
     const removeAll = document.getElementById('removeAll');
     const removeAllButton = document.createElement('input');
-      removeAllButton.type = 'button';
-      removeAllButton.id = 'removeAllbutton';
-      removeAllButton.value = '埋め込んだ動画をすべて削除';
-      removeAllButton.setAttribute("class", "removeBtn");
-      removeAllButton.setAttribute("onClick", "refresh()");
-      removeAll.appendChild(removeAllButton);
+          removeAllButton.type = 'button';
+          removeAllButton.id = 'removeAllbutton';
+          removeAllButton.value = '埋め込んだ動画をすべて削除';
+          removeAllButton.setAttribute("class", "removeBtn");
+          removeAllButton.setAttribute("onClick", "refresh()");
+    removeAll.appendChild(removeAllButton);
 }
 //全て削除ボタンの動作
 function refresh() {
@@ -25,15 +25,17 @@ function refresh() {
 }
 //iframeUrlListの値をローカルストレージに保存
 function iframeSetLocalStorage(){
-    let iframeUrlListJSON = new Array();
-    iframeUrlListJSON = JSON.stringify(iframeUrlList);
+    let iframeUrlListJSON = new Map();
+    iframeUrlListJSON = JSON.stringify([...iframeUrlList]);//スプレッド構文[...]
+    console.log(iframeUrlListJSON);
     localStorage.setItem('iframeUrlJson', iframeUrlListJSON);
 }
 //iframeUrlListの値をローカルストレージから取り出す
 function iframeGetLocalStorage() {
     let iframeUrlListJSONNew = localStorage.getItem('iframeUrlJson');
     let iframeUrlListJSONObj = JSON.parse(iframeUrlListJSONNew);
-    return iframeUrlListJSONObj
+    let map = new Map(iframeUrlListJSONObj);//JSON.praseしたものをMapオブジェクトに変換する。
+    return map
 }
 //resoArrayの値をローカルストレージに保存
 function resoArraySetLocalStorage(){
@@ -86,12 +88,13 @@ function embed(){
         //動画埋め込みエリアの作成
         const embedArea = document.getElementById("embed_area");
         const embedContainer = document.createElement('div');
-          embedContainer.id = 'container_' + urlNum + '_' + urlID;
+        const embedID = 'container_' + urlNum + '_' + urlID;
+          embedContainer.id = embedID;
           embedContainer.setAttribute("class", "containerVideo");
         embedArea.appendChild(embedContainer);
 
             //埋込用子要素
-            const video = document.getElementById(embedContainer.id);
+            const video = document.getElementById(embedID);
             const embTag = document.createElement('div');
               embTag.id = 'output_url-' + urlNum;
               embTag.setAttribute("class", "embed");
@@ -100,24 +103,17 @@ function embed(){
         createIframe();
 
         //削除ボタンの作成
-        const removeVideoArea = document.getElementById(embedContainer.id);
-        const removeSubBtn = document.createElement('input');
-          removeSubBtn.type = 'submit';
-          removeSubBtn.value = 'この動画を削除';
-          removeSubBtn.id = 'removeBtn_' + urlNum + '_' + urlID;
-          removeSubBtn.setAttribute("class", "removeBtn");
-          removeSubBtn.setAttribute("onClick", "remVideo(this.id);deleteList(this.id)");
-        removeVideoArea.appendChild(removeSubBtn);
-
+        removeThisVideo(embedContainer.id, urlNum, urlID);
         //form_button_areaに動画を追加ボタンを作成
         addBtnfunc();
         //埋め込み動作によって不要になる要素を削除する
         remove();
-        //変数iframeUrlListに削除ボタンと同じIDを添え字としたURLのオブジェクトを保存する
-        iframeUrlList[`removeBtn_${urlNum}_${urlID}`] = globalInputUrl;
+        //MapオブジェクトのiframeUrlListに削除ボタンと同じIDを添え字としたURLのオブジェクトを保存する
+        iframeUrlList.set(`removeBtn_${urlNum}_${urlID}`, globalInputUrl);
 
         //iframeUrlListをローカルストレージに代入;
         iframeSetLocalStorage();
+        
         //resoArrayをローカルストレージに保存
         resoArraySetLocalStorage();
 
@@ -137,13 +133,23 @@ embedUrl = null;
 function addBtnfunc() {
     const parentButton = document.getElementById('form_button_area');
     const addButton = document.createElement('input');
-      addButton.type = 'button';
-      addButton.id = 'add_button';
-      addButton.value = 'さらに動画を追加';
-      addButton.setAttribute("onClick", "addForm(urlNum)");
+          addButton.type = 'button';
+          addButton.id = 'add_button';
+          addButton.value = 'さらに動画を追加';
+          addButton.setAttribute("onClick", "addForm(urlNum)");
     parentButton.appendChild(addButton);
 }
-
+//削除ボタンの作成
+function removeThisVideo(remVideoAreaID, remBtnurlNum, remBtnurlID) {
+  const removeVideoArea = document.getElementById(remVideoAreaID);
+  const removeSubBtn = document.createElement('input');
+        removeSubBtn.type = 'submit';
+        removeSubBtn.value = 'この動画を削除';
+        removeSubBtn.id = 'removeBtn_' + remBtnurlNum + '_' + remBtnurlID;
+        removeSubBtn.setAttribute("class", "removeBtn");
+        removeSubBtn.setAttribute("onClick", "remVideo(this.id);deleteList(this.id)");
+  removeVideoArea.appendChild(removeSubBtn);
+}
 //動画を削除ボタン関数
 function remVideo(id){
     console.log ('削除するIDは' + id);
@@ -154,12 +160,11 @@ function remVideo(id){
 //iframeUrlListから削除した動画のIDを削除する関数
 function deleteList(id) {
     console.log (`${id}を削除する処理を実行`);
-    //console.log (Object.keys(iframeUrlList).length);
-    delete iframeUrlList[id];
+    iframeUrlList.delete(id);//mapオブジェクトからキー「id」を削除。
     //当該ボタンの動画を削除したiframeUrlListをローカルストレージに代入;
     iframeSetLocalStorage();
     //iframeUrlListに何も入っていないとき全てを削除ボタンを削除(最後の動画が削除されたときリロードして最初の画面にもどる)
-    if (Object.keys(iframeUrlList).length === 0) {
+    if (iframeUrlList.size === 0) {
       refresh();
     } else {}
 }
