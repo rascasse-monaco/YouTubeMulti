@@ -84,8 +84,7 @@ function embed(){
     let urlID = idNow;
 
     //URL未入力の場合はボタン押下無視
-    if (embedUrl) {
-      
+    if (embedUrl) {      
         //削除ボタンの作成（同時に埋め込みエリアの作成）
         removeThisVideo(embArea(urlNum, urlID), urlNum, urlID);
         //Iframe作成
@@ -95,14 +94,11 @@ function embed(){
         //埋め込み動作によって不要になる要素を削除する
         remove();
         //MapオブジェクトのiframeUrlListに削除ボタンと同じIDを添え字としたURLのオブジェクトを保存する
-        iframeUrlList.set(`removeBtn_${urlNum}_${urlID}`, globalInputUrl);
-
+        iframeUrlList.set(`${urlNum}_${urlID}`, globalInputUrl);
         //iframeUrlListをローカルストレージに代入;
         iframeSetLocalStorage();
-        
         //resoArrayをローカルストレージに保存
         resoArraySetLocalStorage();
-
         //全て動画を削除ボタンあったらなにもしない、なかったら作る document.getElementById('removeAllbutton')
         if (iframeUrlList) {
           if (document.getElementById('removeAllbutton')){
@@ -169,7 +165,8 @@ function remVideo(id){
 //iframeUrlListから削除した動画のIDを削除する関数
 function deleteList(id) {
     console.log (`${id}を削除する処理を実行`);
-    iframeUrlList.delete(id);//mapオブジェクトからキー「id」を削除。
+    const removeID = id.split('removeBtn_')[1];
+    iframeUrlList.delete(removeID);//mapオブジェクトからキー「id」を削除。
     //当該ボタンの動画を削除したiframeUrlListをローカルストレージに代入;
     iframeSetLocalStorage();
     //iframeUrlListに何も入っていないとき全てを削除ボタンを削除(最後の動画が削除されたときリロードして最初の画面にもどる)
