@@ -186,44 +186,52 @@ function createIframe() {
     if (videoUrl[0].test(iframeInputUrl)) {//youtubeの文字列があったらtrue
       let urLStr = iframeInputUrl.split('v=')[1];//通常URL用ID抽出
       globalInputUrl = urLStr.slice(0, 11);//先頭から11文字取得
-      youTubeIframe();//YouTube用Iframe作成関数
+      youTubeIframe(resoArray[0], resoArray[1], globalInputUrl);//YouTube用Iframe作成関数
     } else if (videoUrl[1].test(iframeInputUrl)) {//nocovideoの文字列があったらtrue
       let urLStr = iframeInputUrl.split('watch/')[1];//ニコニコ動画URL用ID抽出
       globalInputUrl = urLStr.slice(0, 10);//先頭から10文字取得
-      nicoVideoScriptGen();
+      nicoVideoScriptGen(resoArray[0], resoArray[1], globalInputUrl);
     } else if (videoUrl[3].test(iframeInputUrl)) {//nocovideoの文字列があったらtrue
       let urLStr = iframeInputUrl.split('nico.ms/')[1];//ニコニコ動画スマホ用URL用ID抽出
       globalInputUrl = urLStr.slice(0, 10);//先頭から10文字取得
-      nicoVideoScriptGen();
+      nicoVideoScriptGen(resoArray[0], resoArray[1], globalInputUrl);
     } else if (videoUrl[2].test(iframeInputUrl)) {//nocovideoの文字列があったらtrue
       globalInputUrl = iframeInputUrl.split('be/')[1];//短縮URL用ID抽出
-      youTubeIframe();//YouTube用Iframe作成関数
+      youTubeIframe(resoArray[0], resoArray[1], globalInputUrl);//YouTube用Iframe作成関数
     } else {
       globalInputUrl = iframeInputUrl;//ニコニコ動画URL用ID抽出
-      nicoVideoScriptGen();
+      nicoVideoScriptGen(resoArray[0], resoArray[1], globalInputUrl);
     }
 }
 
-//YouTube用 Iframe作成関数
-function youTubeIframe() {
+/** YouTube用 Iframe作成関数 
+ * @param {Array} width resoArray[0]
+ * @param {Array} height resoArray[1]
+ * @param {Map} value value iframeUrlList or globalInputUrl
+ */
+function youTubeIframe(width, height, value) {
     /**iframeに動画のIDとサイズ等を入れ込んで代入
      * ?enablejsapi=1によって"https://www.youtube.com/iframe_api"を使用可能にして、
      * apiオプションを追加できるようにする。(できてない)
     */
     let iframe = new String();
     iframe = 
-      `<iframe id="player" width=${resoArray[0]} height=${resoArray[1]} src=" https://www.youtube.com/embed/${globalInputUrl}?rel=0&amp;  enablejsapi=1&amp;widgetid=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;  picture-in-picture" allowfullscreen></iframe>`;
+      `<iframe id="player" width=${width} height=${height} src=" https://www.youtube.com/embed/${value}?rel=0&amp;  enablejsapi=1&amp;widgetid=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;  picture-in-picture" allowfullscreen></iframe>`;
 
     let output_url = document.getElementById("output_url-" + urlNum);
     output_url.innerHTML = iframe;
 } 
 
-//ニコニコ動画用 埋込scriptリンク作成関数
-function nicoVideoScriptGen() {
+/** ニコニコ動画用 埋込scriptリンク作成関数
+* @param {Array} width resoArray[0]
+ * @param {Array} height resoArray[1]
+ * @param {Map} value value iframeUrlList
+ */
+function nicoVideoScriptGen(width, height, value) {
     //iframeに動画のIDとサイズ等を入れ込んで代入
     let nicoScript = new String();
     nicoScript =
-      `<iframe allowfullscreen="allowfullscreen" allow="autoplay" frameborder="0" width=${resoArray[0]} height=${resoArray[1]} src="https://  embed.nicovideo.jp/watch/${globalInputUrl}?oldScript=1&amp;referer=&amp;from=0&amp;allowProgrammaticFullScreen=1" style="max-width:   100%; "></iframe>`; 
+      `<iframe allowfullscreen="allowfullscreen" allow="autoplay" frameborder="0" width=${width} height=${height} src="https://embed.nicovideo.jp/watch/${value}?oldScript=1&amp;referer=&amp;from=0&amp;allowProgrammaticFullScreen=1" style="max-width:100%;"></iframe>`; 
 
     let output_url = document.getElementById("output_url-" + urlNum);
     output_url.innerHTML = nicoScript;
