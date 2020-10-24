@@ -186,21 +186,21 @@ function createIframe() {
     if (videoUrl[0].test(iframeInputUrl)) {//youtubeの文字列があったらtrue
       let urLStr = iframeInputUrl.split('v=')[1];//通常URL用ID抽出
       globalInputUrl = urLStr.slice(0, 11);//先頭から11文字取得
-      youTubeIframe(resoArray[0], resoArray[1], globalInputUrl);//YouTube用Iframe作成関数
+      youTubeIframe(resoArray[0], resoArray[1], globalInputUrl, urlNum);//YouTube用Iframe作成関数
     } else if (videoUrl[1].test(iframeInputUrl)) {//nocovideoの文字列があったらtrue
       let urLStr = iframeInputUrl.split('watch/')[1];//ニコニコ動画URL用ID抽出
       globalInputUrl = urLStr.slice(0, 10);//先頭から10文字取得
-      nicoVideoScriptGen(resoArray[0], resoArray[1], globalInputUrl);
+      nicoVideoScriptGen(resoArray[0], resoArray[1], globalInputUrl, urlNum);
     } else if (videoUrl[3].test(iframeInputUrl)) {//nocovideoの文字列があったらtrue
       let urLStr = iframeInputUrl.split('nico.ms/')[1];//ニコニコ動画スマホ用URL用ID抽出
       globalInputUrl = urLStr.slice(0, 10);//先頭から10文字取得
-      nicoVideoScriptGen(resoArray[0], resoArray[1], globalInputUrl);
+      nicoVideoScriptGen(resoArray[0], resoArray[1], globalInputUrl, urlNum);
     } else if (videoUrl[2].test(iframeInputUrl)) {//nocovideoの文字列があったらtrue
       globalInputUrl = iframeInputUrl.split('be/')[1];//短縮URL用ID抽出
-      youTubeIframe(resoArray[0], resoArray[1], globalInputUrl);//YouTube用Iframe作成関数
+      youTubeIframe(resoArray[0], resoArray[1], globalInputUrl, urlNum);//YouTube用Iframe作成関数
     } else {
       globalInputUrl = iframeInputUrl;//ニコニコ動画URL用ID抽出
-      nicoVideoScriptGen(resoArray[0], resoArray[1], globalInputUrl);
+      nicoVideoScriptGen(resoArray[0], resoArray[1], globalInputUrl, urlNum);
     }
 }
 
@@ -209,7 +209,7 @@ function createIframe() {
  * @param {Array} height resoArray[1]
  * @param {Map} value value iframeUrlList or globalInputUrl
  */
-function youTubeIframe(width, height, value) {
+function youTubeIframe(width, height, value, urlNum) {
     /**iframeに動画のIDとサイズ等を入れ込んで代入
      * ?enablejsapi=1によって"https://www.youtube.com/iframe_api"を使用可能にして、
      * apiオプションを追加できるようにする。(できてない)
@@ -227,7 +227,7 @@ function youTubeIframe(width, height, value) {
  * @param {Array} height resoArray[1]
  * @param {Map} value value iframeUrlList
  */
-function nicoVideoScriptGen(width, height, value) {
+function nicoVideoScriptGen(width, height, value, urlNum) {
     //iframeに動画のIDとサイズ等を入れ込んで代入
     let nicoScript = new String();
     nicoScript =
