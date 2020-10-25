@@ -49,12 +49,7 @@ function resoArrayGetLocalStorage() {
     let resoArrayJSONObj = JSON.parse(resoArrayJSONNew);
     return resoArrayJSONObj
 }
-//フォームボタン作成関数
-createForm(urlNum);
-//セレクトメニュー作成関数
-selectMenu();
-//埋込ボタン作成関数
-embedButtonfunc();
+
 //localStorageからurlListのオブジェクトを読み込んで代入
 if (iframeGetLocalStorage()) {
   iframeUrlList = iframeGetLocalStorage();
@@ -63,10 +58,37 @@ if (iframeGetLocalStorage()) {
 if (resoArrayGetLocalStorage()) {
   resoArray = resoArrayGetLocalStorage();
 } else {}
-//iframeUrlListに値がある場合は動画をすべて削除ボタンを作成。
-if (!iframeUrlList) {
-  removeAll();
-} else {}
+
+
+//マップ内データロード関数
+function preLoad(){
+    addBtnfunc();//form_button_areaに動画を追加ボタンを作成
+    //iframeUrlListからMap読み込み
+    iframeUrlList.forEach((value, key) => {
+        removeThisVideo(embArea(urlNum, 0, key), urlNum, 0, key);
+    
+            if (value.length === 11) {
+              youTubeIframe(resoArray[0], resoArray[1], value, urlNum)
+            } else {
+              nicoVideoScriptGen(resoArray[0], resoArray[1], value, urlNum)
+            }
+            urlNum++;
+    });
+}
+
+//iframeUrlListに値がある場合は動画をすべて値をリロードして埋め込み動画を作成、削除ボタンを作成。
+if (iframeUrlList.size > 0) {
+  preLoad();//データをプリロード
+  removeAll();//すべて削除ボタン作成
+} else {
+  //フォームボタン作成関数
+  createForm(urlNum);
+  //セレクトメニュー作成関数
+  selectMenu();
+  //埋込ボタン作成関数
+  embedButtonfunc();
+}
+
 //-------------------------------------------
 //動画埋込ボタン押下後処理用関数
 function embed(){

@@ -49,12 +49,7 @@ function resoArrayGetLocalStorage() {
     let resoArrayJSONObj = JSON.parse(resoArrayJSONNew);
     return resoArrayJSONObj
 }
-//フォームボタン作成関数
-createForm(urlNum);
-//セレクトメニュー作成関数
-selectMenu();
-//埋込ボタン作成関数
-embedButtonfunc();
+
 //localStorageからurlListのオブジェクトを読み込んで代入
 if (iframeGetLocalStorage()) {
   iframeUrlList = iframeGetLocalStorage();
@@ -63,10 +58,37 @@ if (iframeGetLocalStorage()) {
 if (resoArrayGetLocalStorage()) {
   resoArray = resoArrayGetLocalStorage();
 } else {}
-//iframeUrlListに値がある場合は動画をすべて削除ボタンを作成。
-if (!iframeUrlList) {
-  removeAll();
-} else {}
+
+
+//マップ内データロード関数
+function preLoad(){
+    addBtnfunc();//form_button_areaに動画を追加ボタンを作成
+    //iframeUrlListからMap読み込み
+    iframeUrlList.forEach((value, key) => {
+        removeThisVideo(embArea(urlNum, 0, key), urlNum, 0, key);
+    
+            if (value.length === 11) {
+              youTubeIframe(resoArray[0], resoArray[1], value, urlNum)
+            } else {
+              nicoVideoScriptGen(resoArray[0], resoArray[1], value, urlNum)
+            }
+            urlNum++;
+    });
+}
+
+//iframeUrlListに値がある場合は動画をすべて値をリロードして埋め込み動画を作成、削除ボタンを作成。
+if (iframeUrlList.size > 0) {
+  preLoad();//データをプリロード
+  removeAll();//すべて削除ボタン作成
+} else {
+  //フォームボタン作成関数
+  createForm(urlNum);
+  //セレクトメニュー作成関数
+  selectMenu();
+  //埋込ボタン作成関数
+  embedButtonfunc();
+}
+
 //-------------------------------------------
 //動画埋込ボタン押下後処理用関数
 function embed(){
@@ -86,7 +108,7 @@ function embed(){
     //URL未入力の場合はボタン押下無視
     if (embedUrl) {      
         //削除ボタンの作成（同時に埋め込みエリアの作成）
-        removeThisVideo(embArea(urlNum, urlID), urlNum, urlID);
+        removeThisVideo(embArea(urlNum, urlID, 0), urlNum, urlID, 0);
         //Iframe作成
         createIframe();
         //form_button_areaに動画を追加ボタンを作成
@@ -111,16 +133,32 @@ embedUrl = null;
 }
 //------------------------------------
 
+//form_button_areaに動画を追加ボタンを作成関数
+function addBtnfunc() {
+  const parentButton = document.getElementById('form_button_area');
+  const addButton = document.createElement('input');
+        addButton.type = 'button';
+        addButton.id = 'add_button';
+        addButton.value = 'さらに動画を追加';
+        addButton.setAttribute("onClick", "addForm(urlNum)");
+  parentButton.appendChild(addButton);
+}
 /**
  * 動画埋め込みエリアの作成
- * @param {Number} embAreaurlNum 通し番号
- * @param {String} embAreaurlID 埋込時間入れたID
+ * @param {Number} embAreaurlNum 通し番号 urlNum
+ * @param {String} embAreaurlID 埋込時間入れたID urlID
  * @return {String} コンテナID
+ * @param {String} key iframeUrlList Map key
  */
-function embArea(embAreaurlNum, embAreaurlID) {
+function embArea(embAreaurlNum, embAreaurlID, key) {
   const embedArea = document.getElementById("embed_area");
   const embedContainer = document.createElement('div');
-  const embedID = 'container_' + embAreaurlNum + '_' + embAreaurlID;
+  let embedID = new String();
+  if (embAreaurlID === 0){
+    embedID = `container_${key}`;
+  } else {
+    embedID = `container_${embAreaurlNum}_${embAreaurlID}`;
+  }
     embedContainer.id = embedID;
     embedContainer.setAttribute("class", "containerVideo");
   embedArea.appendChild(embedContainer);
@@ -128,32 +166,34 @@ function embArea(embAreaurlNum, embAreaurlID) {
       //埋込用子要素
       const video = document.getElementById(embedID);
       const embTag = document.createElement('div');
-        embTag.id = 'output_url-' + embAreaurlNum;
+        embTag.id = `output_url-${embAreaurlNum}`;
         embTag.setAttribute("class", "embed");
       video.appendChild(embTag);
       return embedID;
 }
 
-//form_button_areaに動画を追加ボタンを作成関数
-function addBtnfunc() {
-    const parentButton = document.getElementById('form_button_area');
-    const addButton = document.createElement('input');
-          addButton.type = 'button';
-          addButton.id = 'add_button';
-          addButton.value = 'さらに動画を追加';
-          addButton.setAttribute("onClick", "addForm(urlNum)");
-    parentButton.appendChild(addButton);
-}
-//削除ボタンの作成
-function removeThisVideo(remVideoAreaID, remBtnurlNum, remBtnurlID) {
-  const removeVideoArea = document.getElementById(remVideoAreaID);
-  const removeSubBtn = document.createElement('input');
-        removeSubBtn.type = 'submit';
-        removeSubBtn.value = 'この動画を削除';
-        removeSubBtn.id = 'removeBtn_' + remBtnurlNum + '_' + remBtnurlID;
-        removeSubBtn.setAttribute("class", "removeBtn");
-        removeSubBtn.setAttribute("onClick", "remVideo(this.id);deleteList(this.id)");
-  removeVideoArea.appendChild(removeSubBtn);
+/**
+ * 削除ボタンの作成
+ * @param {Function} remVideoAreaID embArea retrun embedID
+ * @param {Number} remBtnurlNum urlNum
+ * @param {Number} remBtnurlID urlID
+ * @param {String} key iframeUrlList Map key
+ */
+function removeThisVideo(remVideoAreaID, remBtnurlNum, remBtnurlID, key) {
+    const removeVideoArea = document.getElementById(remVideoAreaID);
+    const removeSubBtn = document.createElement('input');
+          removeSubBtn.type = 'submit';
+          removeSubBtn.value = 'この動画を削除';
+    let remSubBtn = new String();
+    if (remBtnurlID === 0) {
+      remSubBtn = `removeBtn_${key}`;
+    } else {
+      remSubBtn = `removeBtn_${remBtnurlNum}_${remBtnurlID}`;
+    }
+          removeSubBtn.id = remSubBtn;
+          removeSubBtn.setAttribute("class", "removeBtn");
+          removeSubBtn.setAttribute("onClick", "remVideo(this.id);deleteList(this.id)");
+    removeVideoArea.appendChild(removeSubBtn);
 }
 //動画を削除ボタン関数
 function remVideo(id){
@@ -186,44 +226,52 @@ function createIframe() {
     if (videoUrl[0].test(iframeInputUrl)) {//youtubeの文字列があったらtrue
       let urLStr = iframeInputUrl.split('v=')[1];//通常URL用ID抽出
       globalInputUrl = urLStr.slice(0, 11);//先頭から11文字取得
-      youTubeIframe();//YouTube用Iframe作成関数
+      youTubeIframe(resoArray[0], resoArray[1], globalInputUrl, urlNum);//YouTube用Iframe作成関数
     } else if (videoUrl[1].test(iframeInputUrl)) {//nocovideoの文字列があったらtrue
       let urLStr = iframeInputUrl.split('watch/')[1];//ニコニコ動画URL用ID抽出
       globalInputUrl = urLStr.slice(0, 10);//先頭から10文字取得
-      nicoVideoScriptGen();
+      nicoVideoScriptGen(resoArray[0], resoArray[1], globalInputUrl, urlNum);
     } else if (videoUrl[3].test(iframeInputUrl)) {//nocovideoの文字列があったらtrue
       let urLStr = iframeInputUrl.split('nico.ms/')[1];//ニコニコ動画スマホ用URL用ID抽出
       globalInputUrl = urLStr.slice(0, 10);//先頭から10文字取得
-      nicoVideoScriptGen();
+      nicoVideoScriptGen(resoArray[0], resoArray[1], globalInputUrl, urlNum);
     } else if (videoUrl[2].test(iframeInputUrl)) {//nocovideoの文字列があったらtrue
       globalInputUrl = iframeInputUrl.split('be/')[1];//短縮URL用ID抽出
-      youTubeIframe();//YouTube用Iframe作成関数
+      youTubeIframe(resoArray[0], resoArray[1], globalInputUrl, urlNum);//YouTube用Iframe作成関数
     } else {
       globalInputUrl = iframeInputUrl;//ニコニコ動画URL用ID抽出
-      nicoVideoScriptGen();
+      nicoVideoScriptGen(resoArray[0], resoArray[1], globalInputUrl, urlNum);
     }
 }
 
-//YouTube用 Iframe作成関数
-function youTubeIframe() {
+/** YouTube用 Iframe作成関数 
+ * @param {Array} width resoArray[0]
+ * @param {Array} height resoArray[1]
+ * @param {Map} value value iframeUrlList or globalInputUrl
+ */
+function youTubeIframe(width, height, value, urlNum) {
     /**iframeに動画のIDとサイズ等を入れ込んで代入
      * ?enablejsapi=1によって"https://www.youtube.com/iframe_api"を使用可能にして、
      * apiオプションを追加できるようにする。(できてない)
     */
     let iframe = new String();
     iframe = 
-      `<iframe id="player" width=${resoArray[0]} height=${resoArray[1]} src=" https://www.youtube.com/embed/${globalInputUrl}?rel=0&amp;  enablejsapi=1&amp;widgetid=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;  picture-in-picture" allowfullscreen></iframe>`;
+      `<iframe id="player" width=${width} height=${height} src=" https://www.youtube.com/embed/${value}?rel=0&amp;  enablejsapi=1&amp;widgetid=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;  picture-in-picture" allowfullscreen></iframe>`;
 
     let output_url = document.getElementById("output_url-" + urlNum);
     output_url.innerHTML = iframe;
 } 
 
-//ニコニコ動画用 埋込scriptリンク作成関数
-function nicoVideoScriptGen() {
+/** ニコニコ動画用 埋込scriptリンク作成関数
+* @param {Array} width resoArray[0]
+ * @param {Array} height resoArray[1]
+ * @param {Map} value value iframeUrlList
+ */
+function nicoVideoScriptGen(width, height, value, urlNum) {
     //iframeに動画のIDとサイズ等を入れ込んで代入
     let nicoScript = new String();
     nicoScript =
-      `<iframe allowfullscreen="allowfullscreen" allow="autoplay" frameborder="0" width=${resoArray[0]} height=${resoArray[1]} src="https://  embed.nicovideo.jp/watch/${globalInputUrl}?oldScript=1&amp;referer=&amp;from=0&amp;allowProgrammaticFullScreen=1" style="max-width:   100%; "></iframe>`; 
+      `<iframe allowfullscreen="allowfullscreen" allow="autoplay" frameborder="0" width=${width} height=${height} src="https://embed.nicovideo.jp/watch/${value}?oldScript=1&amp;referer=&amp;from=0&amp;allowProgrammaticFullScreen=1" style="max-width:100%;"></iframe>`; 
 
     let output_url = document.getElementById("output_url-" + urlNum);
     output_url.innerHTML = nicoScript;
