@@ -8,19 +8,33 @@ let iframeUrlList  = new Map([
 let iframe = new String();
 let resoArray = ["480", "270"];
 
-addBtnfunc();
+preLoad();
+function preLoad(){
+  addBtnfunc();//form_button_areaに動画を追加ボタンを作成
+  //iframeUrlListからMap読み込み
+  iframeUrlList.forEach((value, key) => {
+      removeThisVideo(embArea(urlNum, 0, key), urlNum, 0, key);
+  
+          if (value.length === 11) {
+            youTubeIframe(resoArray[0], resoArray[1], value, urlNum)
+          } else {
+            nicoVideoScriptGen(resoArray[0], resoArray[1], value, urlNum)
+          }
+          urlNum++;
+  });
+}
 
-iframeUrlList.forEach((value, key) => {
-    removeThisVideo(embArea(urlNum, 0, key), urlNum, 0, key);
 
-        if (value.length === 11) {
-          youTubeIframe(resoArray[0], resoArray[1], value, urlNum)
-        } else {
-          nicoVideoScriptGen(resoArray[0], resoArray[1], value, urlNum)
-        }
-        urlNum++;
-});
-
+  //form_button_areaに動画を追加ボタンを作成関数
+  function addBtnfunc() {
+    const parentButton = document.getElementById('form_button_area');
+    const addButton = document.createElement('input');
+          addButton.type = 'button';
+          addButton.id = 'add_button';
+          addButton.value = 'さらに動画を追加';
+          addButton.setAttribute("onClick", "addForm(urlNum)");
+    parentButton.appendChild(addButton);
+}
 /**
  * 動画埋め込みエリアの作成
  * @param {Number} embAreaurlNum 通し番号 urlNum
@@ -50,16 +64,6 @@ function embArea(embAreaurlNum, embAreaurlID, key) {
         return embedID;
   }
   
-  //form_button_areaに動画を追加ボタンを作成関数
-  function addBtnfunc() {
-      const parentButton = document.getElementById('form_button_area');
-      const addButton = document.createElement('input');
-            addButton.type = 'button';
-            addButton.id = 'add_button';
-            addButton.value = 'さらに動画を追加';
-            addButton.setAttribute("onClick", "addForm(urlNum)");
-      parentButton.appendChild(addButton);
-  }
   /**
    * 削除ボタンの作成
    * @param {Function} remVideoAreaID embArea retrun embedID
@@ -78,7 +82,7 @@ function embArea(embAreaurlNum, embAreaurlID, key) {
       } else {
         remSubBtn = `removeBtn_${remBtnurlNum}_${remBtnurlID}`;
       }
-            remSubBtn = removeSubBtn.id;
+            removeSubBtn.id = remSubBtn;
             removeSubBtn.setAttribute("class", "removeBtn");
             removeSubBtn.setAttribute("onClick", "remVideo(this.id);deleteList(this.id)");
       removeVideoArea.appendChild(removeSubBtn);

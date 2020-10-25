@@ -86,7 +86,7 @@ function embed(){
     //URL未入力の場合はボタン押下無視
     if (embedUrl) {      
         //削除ボタンの作成（同時に埋め込みエリアの作成）
-        removeThisVideo(embArea(urlNum, urlID), urlNum, urlID);
+        removeThisVideo(embArea(urlNum, urlID, 0), urlNum, urlID, 0);
         //Iframe作成
         createIframe();
         //form_button_areaに動画を追加ボタンを作成
@@ -111,16 +111,32 @@ embedUrl = null;
 }
 //------------------------------------
 
+//form_button_areaに動画を追加ボタンを作成関数
+function addBtnfunc() {
+  const parentButton = document.getElementById('form_button_area');
+  const addButton = document.createElement('input');
+        addButton.type = 'button';
+        addButton.id = 'add_button';
+        addButton.value = 'さらに動画を追加';
+        addButton.setAttribute("onClick", "addForm(urlNum)");
+  parentButton.appendChild(addButton);
+}
 /**
  * 動画埋め込みエリアの作成
- * @param {Number} embAreaurlNum 通し番号
- * @param {String} embAreaurlID 埋込時間入れたID
+ * @param {Number} embAreaurlNum 通し番号 urlNum
+ * @param {String} embAreaurlID 埋込時間入れたID urlID
  * @return {String} コンテナID
+ * @param {String} key iframeUrlList Map key
  */
-function embArea(embAreaurlNum, embAreaurlID) {
+function embArea(embAreaurlNum, embAreaurlID, key) {
   const embedArea = document.getElementById("embed_area");
   const embedContainer = document.createElement('div');
-  const embedID = 'container_' + embAreaurlNum + '_' + embAreaurlID;
+  let embedID = new String();
+  if (embAreaurlID === 0){
+    embedID = `container_${key}`;
+  } else {
+    embedID = `container_${embAreaurlNum}_${embAreaurlID}`;
+  }
     embedContainer.id = embedID;
     embedContainer.setAttribute("class", "containerVideo");
   embedArea.appendChild(embedContainer);
@@ -128,32 +144,34 @@ function embArea(embAreaurlNum, embAreaurlID) {
       //埋込用子要素
       const video = document.getElementById(embedID);
       const embTag = document.createElement('div');
-        embTag.id = 'output_url-' + embAreaurlNum;
+        embTag.id = `output_url-${embAreaurlNum}`;
         embTag.setAttribute("class", "embed");
       video.appendChild(embTag);
       return embedID;
 }
 
-//form_button_areaに動画を追加ボタンを作成関数
-function addBtnfunc() {
-    const parentButton = document.getElementById('form_button_area');
-    const addButton = document.createElement('input');
-          addButton.type = 'button';
-          addButton.id = 'add_button';
-          addButton.value = 'さらに動画を追加';
-          addButton.setAttribute("onClick", "addForm(urlNum)");
-    parentButton.appendChild(addButton);
-}
-//削除ボタンの作成
-function removeThisVideo(remVideoAreaID, remBtnurlNum, remBtnurlID) {
-  const removeVideoArea = document.getElementById(remVideoAreaID);
-  const removeSubBtn = document.createElement('input');
-        removeSubBtn.type = 'submit';
-        removeSubBtn.value = 'この動画を削除';
-        removeSubBtn.id = 'removeBtn_' + remBtnurlNum + '_' + remBtnurlID;
-        removeSubBtn.setAttribute("class", "removeBtn");
-        removeSubBtn.setAttribute("onClick", "remVideo(this.id);deleteList(this.id)");
-  removeVideoArea.appendChild(removeSubBtn);
+/**
+ * 削除ボタンの作成
+ * @param {Function} remVideoAreaID embArea retrun embedID
+ * @param {Number} remBtnurlNum urlNum
+ * @param {Number} remBtnurlID urlID
+ * @param {String} key iframeUrlList Map key
+ */
+function removeThisVideo(remVideoAreaID, remBtnurlNum, remBtnurlID, key) {
+    const removeVideoArea = document.getElementById(remVideoAreaID);
+    const removeSubBtn = document.createElement('input');
+          removeSubBtn.type = 'submit';
+          removeSubBtn.value = 'この動画を削除';
+    let remSubBtn = new String();
+    if (remBtnurlID === 0) {
+      remSubBtn = `removeBtn_${key}`;
+    } else {
+      remSubBtn = `removeBtn_${remBtnurlNum}_${remBtnurlID}`;
+    }
+          removeSubBtn.id = remSubBtn;
+          removeSubBtn.setAttribute("class", "removeBtn");
+          removeSubBtn.setAttribute("onClick", "remVideo(this.id);deleteList(this.id)");
+    removeVideoArea.appendChild(removeSubBtn);
 }
 //動画を削除ボタン関数
 function remVideo(id){
