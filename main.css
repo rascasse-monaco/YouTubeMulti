@@ -12,7 +12,9 @@ h4 {
     margin-top: 10px;
     margin-bottom: 10px;
 }
-
+ i {
+    font-weight: normal;
+ }
 .containerVideo {
     display: inline-block;
     margin-bottom: 10px;

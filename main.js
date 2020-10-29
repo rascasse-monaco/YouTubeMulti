@@ -8,13 +8,13 @@ let iframeUrlList = new Map();
 //全て削除ボタン作成
 function removeAll() {
     const removeAll = document.getElementById('removeAll');
-    const removeAllButton = document.createElement('input');
+    const removeAllButton = document.createElement('button');
           removeAllButton.type = 'button';
           removeAllButton.id = 'removeAllbutton';
-          removeAllButton.value = '埋め込んだ動画をすべて削除';
           removeAllButton.setAttribute("class", "removeBtn");
           removeAllButton.setAttribute("onClick", "refresh()");
     removeAll.appendChild(removeAllButton);
+    removeAllButton.innerHTML = '<i class="fas fa-trash-alt"></i> 動画をすべて削除';
 }
 //全て削除ボタンの動作
 function refresh() {
@@ -141,7 +141,7 @@ function addBtnfunc() {
         addButton.id = 'add_button';
         addButton.setAttribute("onClick", "addForm(urlNum)");
   parentButton.appendChild(addButton);
-  const icon = '<i class="fas fa-sign-in-alt"> 動画を追加</i>'
+  const icon = '<i class="fas fa-box-open"></i> 動画を追加'
   addButton.innerHTML = icon;
 }
 /**
@@ -182,9 +182,8 @@ function embArea(embAreaurlNum, embAreaurlID, key) {
  */
 function removeThisVideo(remVideoAreaID, remBtnurlNum, remBtnurlID, key) {
     const removeVideoArea = document.getElementById(remVideoAreaID);
-    const removeSubBtn = document.createElement('input');
+    const removeSubBtn = document.createElement('button');
           removeSubBtn.type = 'submit';
-          removeSubBtn.value = 'この動画を削除';
     let remSubBtn = new String();
     if (remBtnurlID === 0) {
       remSubBtn = `removeBtn_${key}`;
@@ -195,6 +194,7 @@ function removeThisVideo(remVideoAreaID, remBtnurlNum, remBtnurlID, key) {
           removeSubBtn.setAttribute("class", "removeBtn");
           removeSubBtn.setAttribute("onClick", "remVideo(this.id);deleteList(this.id)");
     removeVideoArea.appendChild(removeSubBtn);
+    removeSubBtn.innerHTML = '<i class="far fa-trash-alt"> この動画を削除</i>';
 }
 //動画を削除ボタン関数
 function remVideo(id){
@@ -402,6 +402,6 @@ function embedButtonfunc() {
     addButton.setAttribute("onClick", "embed()");
   }
   embedButton.appendChild(addButton);
-  const icon = '<i class="fas fa-sign-in-alt"> 動画を追加</i>'
+  const icon = '<i class="fas fa-box-open"></i> 動画を追加'
   addButton.innerHTML = icon;
 }
