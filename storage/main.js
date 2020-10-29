@@ -66,10 +66,12 @@ function preLoad(){
     //iframeUrlListからMap読み込み
     iframeUrlList.forEach((value, key) => {
         removeThisVideo(embArea(urlNum, 0, key), urlNum, 0, key);
-    
+    //Youtube nicocico twitterで分岐
             if (value.length === 11) {
               youTubeIframe(resoArray[0], resoArray[1], value, urlNum)
-            } else {
+            } else if (value.length === 19) {
+              twitterIframe(resoArray[0], resoArray[1], value);
+            }else {
               nicoVideoScriptGen(resoArray[0], resoArray[1], value, urlNum)
             }
             urlNum++;
@@ -136,12 +138,13 @@ embedUrl = null;
 //form_button_areaに動画を追加ボタンを作成関数
 function addBtnfunc() {
   const parentButton = document.getElementById('form_button_area');
-  const addButton = document.createElement('input');
+  const addButton = document.createElement('button');
         addButton.type = 'button';
         addButton.id = 'add_button';
-        addButton.value = 'さらに動画を追加';
         addButton.setAttribute("onClick", "addForm(urlNum)");
   parentButton.appendChild(addButton);
+  const icon = '<i class="fas fa-sign-in-alt"> 動画を追加</i>'
+  addButton.innerHTML = icon;
 }
 /**
  * 動画埋め込みエリアの作成
@@ -220,24 +223,27 @@ function deleteList(id) {
 function createIframe() {
     //YouTube PC スマホ短縮URL用分岐、ニコニコ動画分岐
     const iframeInputUrl = document.getElementById("input_url-" + urlNum).value;
-    let videoUrl = new Array();
-        videoUrl = [ /youtube/ig, /nicovideo/ig, /youtu\.be/ig, /nico\.ms/ig ];//URLを判別するための正規表現
+    let linkUrl = new Array();
+        linkUrl = [ /youtube/ig, /nicovideo/ig, /youtu\.be/ig, /nico\.ms/ig, /twitter\.com/ig ];//URLを判別するための正規表現
 
-    if (videoUrl[0].test(iframeInputUrl)) {//youtubeの文字列があったらtrue
+    if (linkUrl[0].test(iframeInputUrl)) {//youtubeの文字列があったらtrue
       let urLStr = iframeInputUrl.split('v=')[1];//通常URL用ID抽出
       globalInputUrl = urLStr.slice(0, 11);//先頭から11文字取得
       youTubeIframe(resoArray[0], resoArray[1], globalInputUrl, urlNum);//YouTube用Iframe作成関数
-    } else if (videoUrl[1].test(iframeInputUrl)) {//nocovideoの文字列があったらtrue
+    } else if (linkUrl[1].test(iframeInputUrl)) {//nocovideoの文字列があったらtrue
       let urLStr = iframeInputUrl.split('watch/')[1];//ニコニコ動画URL用ID抽出
       globalInputUrl = urLStr.slice(0, 10);//先頭から10文字取得
       nicoVideoScriptGen(resoArray[0], resoArray[1], globalInputUrl, urlNum);
-    } else if (videoUrl[3].test(iframeInputUrl)) {//nocovideoの文字列があったらtrue
+    } else if (linkUrl[3].test(iframeInputUrl)) {//nocovideoの文字列があったらtrue
       let urLStr = iframeInputUrl.split('nico.ms/')[1];//ニコニコ動画スマホ用URL用ID抽出
       globalInputUrl = urLStr.slice(0, 10);//先頭から10文字取得
       nicoVideoScriptGen(resoArray[0], resoArray[1], globalInputUrl, urlNum);
-    } else if (videoUrl[2].test(iframeInputUrl)) {//nocovideoの文字列があったらtrue
+    } else if (linkUrl[2].test(iframeInputUrl)) {//nocovideoの文字列があったらtrue
       globalInputUrl = iframeInputUrl.split('be/')[1];//短縮URL用ID抽出
       youTubeIframe(resoArray[0], resoArray[1], globalInputUrl, urlNum);//YouTube用Iframe作成関数
+    } else if (linkUrl[4].test(iframeInputUrl)) {
+      globalInputUrl = iframeInputUrl.split('/status/')[1];//短縮URL用ID抽出
+      twitterIframe(resoArray[0], resoArray[1], globalInputUrl);//twitter用Iframe作成関数
     } else {
       globalInputUrl = iframeInputUrl;//ニコニコ動画URL用ID抽出
       nicoVideoScriptGen(resoArray[0], resoArray[1], globalInputUrl, urlNum);
@@ -275,6 +281,21 @@ function nicoVideoScriptGen(width, height, value, urlNum) {
 
     let output_url = document.getElementById("output_url-" + urlNum);
     output_url.innerHTML = nicoScript;
+}
+
+/** ツイッター用 埋込scriptリンク作成関数
+* @param {Array} width resoArray[0]
+ * @param {Array} height resoArray[1]
+ * @param {Map} twitterID value iframeUrlList
+ */
+
+function twitterIframe(width, height, twitterID) {
+  let twitterIframe = new String();
+  twitterIframe =
+  `<iframe id="twitter-widget-0" scrolling="" frameborder="0" allowfullscreen="true" class="" width=${width} height=${height}" title="Twitter Tweet" src="https://platform.twitter.com/embed/index.html?dnt=false&amp;embedId=twitter-widget-0&amp;frame=false&amp;hideCard=false&amp;hideThread=false&amp;id=${twitterID}&amp;lang=ja&amp;"></iframe>`
+  console.log(twitterIframe);
+  let output_url = document.getElementById("output_url-" + urlNum);
+  output_url.innerHTML = twitterIframe;
 }
 
 /**YouTubeApi読み込みとオプション設定部分未実装
@@ -391,10 +412,9 @@ function selectOpt(size, text) {
 //埋め込みボタン作成関数
 function embedButtonfunc() {
     const embedButton = document.getElementById('form_button_area');
-    const addButton = document.createElement('input');
+    const addButton = document.createElement('button');
           addButton.type = 'button';
           addButton.id = 'embed_button';
-          addButton.value = '動画を追加';
     //onclickでfunction、embedとreoSetを呼び出し解像度が設定されている場合はresoset関数は呼び出さない。
     if (!resoArray.length) {
       addButton.setAttribute("onClick", "resoSet();embed()");
@@ -402,4 +422,6 @@ function embedButtonfunc() {
       addButton.setAttribute("onClick", "embed()");
     }
     embedButton.appendChild(addButton);
+    const icon = '<i class="fas fa-sign-in-alt"> 動画を追加</i>'
+    addButton.innerHTML = icon;
 }

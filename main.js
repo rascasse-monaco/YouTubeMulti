@@ -136,12 +136,13 @@ embedUrl = null;
 //form_button_areaに動画を追加ボタンを作成関数
 function addBtnfunc() {
   const parentButton = document.getElementById('form_button_area');
-  const addButton = document.createElement('input');
+  const addButton = document.createElement('button');
         addButton.type = 'button';
         addButton.id = 'add_button';
-        addButton.value = 'さらに動画を追加';
         addButton.setAttribute("onClick", "addForm(urlNum)");
   parentButton.appendChild(addButton);
+  const icon = '<i class="fas fa-sign-in-alt"> 動画を追加</i>'
+  addButton.innerHTML = icon;
 }
 /**
  * 動画埋め込みエリアの作成
@@ -390,16 +391,17 @@ function selectOpt(size, text) {
 
 //埋め込みボタン作成関数
 function embedButtonfunc() {
-    const embedButton = document.getElementById('form_button_area');
-    const addButton = document.createElement('input');
-          addButton.type = 'button';
-          addButton.id = 'embed_button';
-          addButton.value = '動画を追加';
-    //onclickでfunction、embedとreoSetを呼び出し解像度が設定されている場合はresoset関数は呼び出さない。
-    if (!resoArray.length) {
-      addButton.setAttribute("onClick", "resoSet();embed()");
-    } else {
-      addButton.setAttribute("onClick", "embed()");
-    }
-    embedButton.appendChild(addButton);
+  const embedButton = document.getElementById('form_button_area');
+  const addButton = document.createElement('button');
+        addButton.type = 'button';
+        addButton.id = 'embed_button';
+  //onclickでfunction、embedとreoSetを呼び出し解像度が設定されている場合はresoset関数は呼び出さない。
+  if (!resoArray.length) {
+    addButton.setAttribute("onClick", "resoSet();embed()");
+  } else {
+    addButton.setAttribute("onClick", "embed()");
+  }
+  embedButton.appendChild(addButton);
+  const icon = '<i class="fas fa-sign-in-alt"> 動画を追加</i>'
+  addButton.innerHTML = icon;
 }
